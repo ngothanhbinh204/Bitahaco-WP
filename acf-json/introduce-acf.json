@@ -1,0 +1,603 @@
+{
+  "key": "group_introduce_page",
+  "title": "Introduce Page - Content Fields",
+  "fields": [
+    {
+      "key": "tab_introduce_banner",
+      "label": "Banner Section",
+      "type": "tab"
+    },
+    {
+      "key": "field_introduce_banner_enable",
+      "name": "introduce_banner_enable",
+      "type": "true_false",
+      "default_value": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_introduce_banner_image",
+      "label": "Banner Image",
+      "name": "introduce_banner_image",
+      "type": "image",
+      "return_format": "array",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_banner_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ]
+    },
+    {
+      "key": "field_introduce_banner_title",
+      "label": "Banner Title",
+      "name": "introduce_banner_title",
+      "type": "text",
+      "default_value": "Tin tức",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_banner_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ]
+    },
+    {
+      "key": "tab_introduce_story",
+      "label": "Story Section (Giới thiệu về Bitahaco)",
+      "type": "tab"
+    },
+    {
+      "key": "field_introduce_story_enable",
+      "name": "introduce_story_enable",
+      "type": "true_false",
+      "default_value": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_introduce_story_title",
+      "label": "Title",
+      "name": "introduce_story_title",
+      "type": "text",
+      "default_value": "Giới thiệu về Bitahaco",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_story_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ]
+    },
+    {
+      "key": "field_introduce_story_description",
+      "label": "Description",
+      "name": "introduce_story_description",
+      "type": "wysiwyg",
+      "toolbar": "basic",
+      "media_upload": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_story_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ]
+    },
+    {
+      "key": "field_introduce_story_images",
+      "label": "Gallery Images (Slider)",
+      "name": "introduce_story_images",
+      "type": "repeater",
+      "layout": "table",
+      "button_label": "Thêm hình",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_story_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ],
+      "sub_fields": [
+        {
+          "key": "field_introduce_story_image",
+          "label": "Image",
+          "name": "story_image",
+          "type": "image",
+          "return_format": "array",
+          "required": 1
+        }
+      ]
+    },
+    {
+      "key": "tab_introduce_stats",
+      "label": "Statistics (Con số nổi bật)",
+      "type": "tab"
+    },
+    {
+      "key": "field_introduce_stats_enable",
+      "name": "introduce_stats_enable",
+      "type": "true_false",
+      "default_value": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_introduce_stats_title",
+      "label": "Title",
+      "name": "introduce_stats_title",
+      "type": "text",
+      "default_value": "Con số nổi bật",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_stats_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ]
+    },
+    {
+      "key": "field_introduce_stats_items",
+      "label": "Statistics Items",
+      "name": "introduce_stats_items",
+      "type": "repeater",
+      "layout": "block",
+      "button_label": "Thêm statistic",
+      "collapsed": "stat_title",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_stats_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ],
+      "sub_fields": [
+        {
+          "key": "field_introduce_stat_icon",
+          "label": "Icon",
+          "name": "stat_icon",
+          "type": "image",
+          "return_format": "array"
+        },
+        {
+          "key": "field_introduce_stat_number",
+          "label": "Number",
+          "name": "stat_number",
+          "type": "number",
+          "required": 1
+        },
+        {
+          "key": "field_introduce_stat_suffix",
+          "label": "Suffix",
+          "name": "stat_suffix",
+          "type": "text",
+          "placeholder": "+"
+        },
+        {
+          "key": "field_introduce_stat_title",
+          "label": "Title",
+          "name": "stat_title",
+          "type": "text",
+          "required": 1
+        },
+        {
+          "key": "field_introduce_stat_description",
+          "label": "Description",
+          "name": "stat_description",
+          "type": "textarea"
+        }
+      ]
+    },
+    {
+      "key": "tab_introduce_vision",
+      "label": "Vision & Mission (Tầm nhìn - Sứ mệnh)",
+      "type": "tab"
+    },
+    {
+      "key": "field_introduce_vision_enable",
+      "name": "introduce_vision_enable",
+      "type": "true_false",
+      "default_value": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_introduce_vision_background",
+      "label": "Background Image",
+      "name": "introduce_vision_background",
+      "type": "image",
+      "return_format": "array",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_vision_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ]
+    },
+    {
+      "key": "field_introduce_vision_items",
+      "label": "Vision & Mission Items",
+      "name": "introduce_vision_items",
+      "type": "repeater",
+      "layout": "block",
+      "button_label": "Thêm item",
+      "collapsed": "vision_title",
+      "min": 2,
+      "max": 2,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_vision_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ],
+      "sub_fields": [
+        {
+          "key": "field_introduce_vision_icon",
+          "label": "Icon",
+          "name": "vision_icon",
+          "type": "image",
+          "return_format": "array"
+        },
+        {
+          "key": "field_introduce_vision_title",
+          "label": "Title",
+          "name": "vision_title",
+          "type": "text",
+          "required": 1
+        },
+        {
+          "key": "field_introduce_vision_description",
+          "label": "Description",
+          "name": "vision_description",
+          "type": "textarea",
+          "required": 1
+        }
+      ]
+    },
+    {
+      "key": "tab_introduce_history",
+      "label": "History (Lịch sử phát triển)",
+      "type": "tab"
+    },
+    {
+      "key": "field_introduce_history_enable",
+      "name": "introduce_history_enable",
+      "type": "true_false",
+      "default_value": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_introduce_history_title",
+      "label": "Title",
+      "name": "introduce_history_title",
+      "type": "text",
+      "default_value": "Lịch sử hình thành và phát triển",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_history_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ]
+    },
+    {
+      "key": "field_introduce_history_timeline",
+      "label": "Timeline Items",
+      "name": "introduce_history_timeline",
+      "type": "repeater",
+      "layout": "block",
+      "button_label": "Thêm timeline",
+      "collapsed": "timeline_year",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_history_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ],
+      "sub_fields": [
+        {
+          "key": "field_introduce_history_timeline_image",
+          "label": "Image",
+          "name": "timeline_image",
+          "type": "image",
+          "return_format": "array",
+          "required": 1
+        },
+        {
+          "key": "field_introduce_history_timeline_year",
+          "label": "Year",
+          "name": "timeline_year",
+          "type": "text",
+          "required": 1
+        },
+        {
+          "key": "field_introduce_history_timeline_description",
+          "label": "Description",
+          "name": "timeline_description",
+          "type": "textarea",
+          "required": 1
+        }
+      ]
+    },
+    {
+      "key": "tab_introduce_chart",
+      "label": "Organization Chart (Sơ đồ tổ chức)",
+      "type": "tab"
+    },
+    {
+      "key": "field_introduce_chart_enable",
+      "name": "introduce_chart_enable",
+      "type": "true_false",
+      "default_value": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_introduce_chart_title",
+      "label": "Title",
+      "name": "introduce_chart_title",
+      "type": "text",
+      "default_value": "Sơ đồ tổ chức",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_chart_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ]
+    },
+    {
+      "key": "field_introduce_chart_image",
+      "label": "Chart Image",
+      "name": "introduce_chart_image",
+      "type": "image",
+      "return_format": "array",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_chart_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ]
+    },
+    {
+      "key": "tab_introduce_management",
+      "label": "Management (Ban lãnh đạo)",
+      "type": "tab"
+    },
+    {
+      "key": "field_introduce_management_enable",
+      "name": "introduce_management_enable",
+      "type": "true_false",
+      "default_value": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_introduce_management_title",
+      "label": "Title",
+      "name": "introduce_management_title",
+      "type": "text",
+      "default_value": "Ban lãnh đạo",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_management_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ]
+    },
+    {
+      "key": "field_introduce_management_groups",
+      "label": "Management Groups",
+      "name": "introduce_management_groups",
+      "type": "repeater",
+      "layout": "block",
+      "button_label": "Thêm nhóm",
+      "collapsed": "group_title",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_management_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ],
+      "sub_fields": [
+        {
+          "key": "field_introduce_management_group_title",
+          "label": "Group Title",
+          "name": "group_title",
+          "type": "text",
+          "required": 1,
+          "placeholder": "Hội đồng quản trị"
+        },
+        {
+          "key": "field_introduce_management_members",
+          "label": "Members",
+          "name": "group_members",
+          "type": "repeater",
+          "layout": "block",
+          "button_label": "Thêm thành viên",
+          "collapsed": "member_name",
+          "sub_fields": [
+            {
+              "key": "field_introduce_management_member_image",
+              "label": "Photo",
+              "name": "member_image",
+              "type": "image",
+              "return_format": "array",
+              "required": 1
+            },
+            {
+              "key": "field_introduce_management_member_name",
+              "label": "Name",
+              "name": "member_name",
+              "type": "text",
+              "required": 1
+            },
+            {
+              "key": "field_introduce_management_member_role",
+              "label": "Role",
+              "name": "member_role",
+              "type": "text",
+              "required": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "tab_introduce_partners",
+      "label": "Partners (Khách hàng - Đối tác)",
+      "type": "tab"
+    },
+    {
+      "key": "field_introduce_partners_enable",
+      "name": "introduce_partners_enable",
+      "type": "true_false",
+      "default_value": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_introduce_partners_background",
+      "label": "Background Image",
+      "name": "introduce_partners_background",
+      "type": "image",
+      "return_format": "array",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_partners_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ]
+    },
+    {
+      "key": "field_introduce_partners_title",
+      "label": "Title",
+      "name": "introduce_partners_title",
+      "type": "text",
+      "default_value": "Khách hàng - Đối tác",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_partners_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ]
+    },
+    {
+      "key": "field_introduce_partners_description",
+      "label": "Description",
+      "name": "introduce_partners_description",
+      "type": "textarea",
+      "default_value": "BITAHACO hân hạnh đồng hành, cung cấp dịch vụ thương mại cho các đơn vị hàng đầu Việt Nam và thế giới.",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_partners_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ]
+    },
+    {
+      "key": "field_introduce_partners_logos",
+      "label": "Partner Logos",
+      "name": "introduce_partners_logos",
+      "type": "repeater",
+      "layout": "table",
+      "button_label": "Thêm logo",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_partners_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ],
+      "sub_fields": [
+        {
+          "key": "field_introduce_partners_logo_image",
+          "label": "Logo",
+          "name": "partner_logo",
+          "type": "image",
+          "return_format": "array",
+          "required": 1
+        }
+      ]
+    },
+    {
+      "key": "tab_introduce_awards",
+      "label": "Awards (Bằng khen - Giải thưởng)",
+      "type": "tab"
+    },
+    {
+      "key": "field_introduce_awards_enable",
+      "name": "introduce_awards_enable",
+      "type": "true_false",
+      "default_value": 1,
+      "ui": 1
+    },
+    {
+      "key": "field_introduce_awards_title",
+      "label": "Title",
+      "name": "introduce_awards_title",
+      "type": "text",
+      "default_value": "Bằng khen - Giải thưởng",
+      "conditional_logic": [
+        [
+          {
+            "field": "field_introduce_awards_enable",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "page_template",
+        "operator": "==",
+        "value": "templates/template_introduce.php"
+      }
+    ]
+  ],
+  "active": true
+}

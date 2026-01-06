@@ -1,0 +1,218 @@
+{
+  "key": "group_theme_options",
+  "title": "Theme Settings - Header & Footer",
+  "fields": [
+    {
+      "key": "tab_header",
+      "label": "Header Settings",
+      "type": "tab"
+    },
+    {
+      "key": "field_header_logo",
+      "label": "Logo",
+      "name": "header_logo",
+      "type": "image",
+      "return_format": "array",
+      "required": 1
+    },
+    {
+      "key": "field_header_slogan",
+      "label": "Slogan",
+      "name": "header_slogan",
+      "type": "text",
+      "default_value": "HÀNH TRÌNH BỀN VỮNG - KHÁT VỌNG VƯƠN XA"
+    },
+    {
+      "key": "field_header_career_link",
+      "label": "Career Link (Tuyển dụng)",
+      "name": "header_career_link",
+      "type": "link",
+      "return_format": "array"
+    },
+    {
+      "key": "field_header_phone",
+      "label": "Phone Number",
+      "name": "header_phone",
+      "type": "wysiwyg",
+      "toolbar": "basic",
+      "media_upload": 0
+    },
+    {
+      "key": "field_header_language_vn",
+      "label": "Vietnam Flag Icon",
+      "name": "header_language_vn",
+      "type": "image",
+      "return_format": "array"
+    },
+    {
+      "key": "field_header_language_en",
+      "label": "English Flag Icon",
+      "name": "header_language_en",
+      "type": "image",
+      "return_format": "array"
+    },
+    {
+      "key": "field_header_search_icon",
+      "label": "Search Icon",
+      "name": "header_search_icon",
+      "type": "image",
+      "return_format": "array"
+    },
+    {
+      "key": "tab_footer",
+      "label": "Footer Settings",
+      "type": "tab"
+    },
+    {
+      "key": "field_footer_logo",
+      "label": "Footer Logo",
+      "name": "footer_logo",
+      "type": "image",
+      "return_format": "array",
+      "required": 1
+    },
+    {
+      "key": "field_footer_company_name",
+      "label": "Company Name",
+      "name": "footer_company_name",
+      "type": "text",
+      "default_value": "CÔNG TY CỔ PHẦN DỊCH VỤ SẢN XUẤT XUẤT NHẬP KHẨU BÌNH TÂY (BITAHACO)"
+    },
+    {
+      "key": "field_footer_address",
+      "label": "Address",
+      "name": "footer_address",
+      "type": "wysiwyg",
+      "toolbar": "basic",
+      "media_upload": 0
+    },
+    {
+      "key": "field_footer_map_link",
+      "label": "Google Map Link",
+      "name": "footer_map_link",
+      "type": "link",
+      "return_format": "array"
+    },
+    {
+      "key": "field_footer_contact",
+      "label": "Contact Information",
+      "name": "footer_contact",
+      "type": "repeater",
+      "layout": "table",
+      "button_label": "Thêm thông tin liên hệ",
+      "sub_fields": [
+        {
+          "key": "field_footer_contact_label",
+          "label": "Label",
+          "name": "label",
+          "type": "text"
+        },
+        {
+          "key": "field_footer_contact_value",
+          "label": "Value",
+          "name": "value",
+          "type": "wysiwyg",
+          "toolbar": "basic",
+          "media_upload": 0
+        }
+      ]
+    },
+    {
+      "key": "field_footer_certificate",
+      "label": "Certificate Info",
+      "name": "footer_certificate",
+      "type": "wysiwyg",
+      "toolbar": "basic",
+      "media_upload": 0
+    },
+    {
+      "key": "field_footer_social",
+      "label": "Social Media Links",
+      "name": "footer_social",
+      "type": "repeater",
+      "layout": "table",
+      "button_label": "Thêm social link",
+      "sub_fields": [
+        {
+          "key": "field_footer_social_icon",
+          "label": "Icon Class",
+          "name": "icon",
+          "type": "text",
+          "placeholder": "fa-facebook-f"
+        },
+        {
+          "key": "field_footer_social_link",
+          "label": "Link",
+          "name": "link",
+          "type": "link",
+          "return_format": "array"
+        }
+      ]
+    },
+    {
+      "key": "field_footer_menu_title",
+      "label": "Footer Menu Title",
+      "name": "footer_menu_title",
+      "type": "text",
+      "default_value": "Liên hệ"
+    },
+    {
+      "key": "field_footer_copyright",
+      "label": "Copyright Text",
+      "name": "footer_copyright",
+      "type": "text",
+      "default_value": "Copyright © 2025 Bản quyền thuộc về Công ty TNHH MTV Bảo Hiểm Bảo Việt."
+    },
+    {
+      "key": "field_footer_policy_links",
+      "label": "Policy Links",
+      "name": "footer_policy_links",
+      "type": "repeater",
+      "layout": "table",
+      "button_label": "Thêm link",
+      "sub_fields": [
+        {
+          "key": "field_footer_policy_link",
+          "label": "Link",
+          "name": "link",
+          "type": "link",
+          "return_format": "array"
+        }
+      ]
+    },
+    {
+      "key": "field_footer_fixed_cta",
+      "label": "Fixed CTA Buttons (Tool Fixed)",
+      "name": "footer_fixed_cta",
+      "type": "repeater",
+      "layout": "block",
+      "button_label": "Thêm CTA button",
+      "sub_fields": [
+        {
+          "key": "field_footer_fixed_cta_icon",
+          "label": "Icon Class",
+          "name": "icon",
+          "type": "text",
+          "placeholder": "fa-brands fa-facebook"
+        },
+        {
+          "key": "field_footer_fixed_cta_link",
+          "label": "Link",
+          "name": "link",
+          "type": "link",
+          "return_format": "array"
+        }
+      ]
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "options_page",
+        "operator": "==",
+        "value": "theme-settings"
+      }
+    ]
+  ],
+  "active": true
+}

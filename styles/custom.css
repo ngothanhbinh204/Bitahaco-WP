@@ -1,0 +1,17 @@
+.otgs-development-site-front-end{
+    display: none !important
+}
+
+.subscribe-form{
+    position: relative;
+}
+
+.subscribe-form .wpcf7-email{
+    border-radius: .5rem;
+}
+
+.subscribe-form .btn{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
