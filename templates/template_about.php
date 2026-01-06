@@ -2,228 +2,401 @@
 /**
  * Template Name: Giới thiệu
  */
+get_header(); 
+
+$banner_img = get_field('about_banner_image');
+$banner_title = get_field('about_banner_title');
+$anchors = get_field('about_menu_anchors');
+
+$id_section_intro = get_field('id_section_intro') ?: '';
+$id_section_vision = get_field('id_section_vision') ?: '';
+$id_section_history = get_field('id_section_history') ?: '';
+$id_section_chart = get_field('id_section_chart') ?: '';
+$id_section_management = get_field('id_section_management') ?: '';
+$id_section_partners = get_field('id_section_partner') ?: '';
+$id_section_award = get_field('id_section_award') ?: '';
+	
+
 ?>
 
-<?php get_header(); ?>
+<main>
+	<section class="section-banner-secondary">
+		<div class="block-banner img-ratio ratio:pt-[1_2] md:ratio:pt-[640_1920]">
+			<?php if($banner_img): ?>
+			<img class="lozad" data-src="<?php echo esc_url($banner_img['url']); ?>"
+				alt="<?php echo esc_attr($banner_img['alt']); ?>" />
+			<?php endif; ?>
+			<div class="content">
+				<div class="container-fluid">
+					<h2 class="title"><?php echo esc_html($banner_title ? $banner_title : get_the_title()); ?></h2>
+					<div class="global-breadcrumb">
+						<?php if(function_exists('rank_math_the_breadcrumbs')) rank_math_the_breadcrumbs(); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-<?php $banner = get_field('banner'); ?>
-<section class="section-banner-secondary pt-[var(--header-height)]"> 
-    <div class="block-banner img-ratio ratio:pt-[1_2] md:ratio:pt-[600_1920]"> <img class="lozad undefined" data-src="<?php echo $banner ? $banner['url'] : get_stylesheet_directory_uri() . "/img/banner-secondary-2.svg"; ?>" alt="<?php echo $banner ? $banner['alt'] : ''; ?>"/>
-    </div>
-</section>
+	<?php if($anchors): ?>
+	<section class="section-scrollTo-active" id="menu-spy">
+		<div class="container-fluid">
+			<ul>
+				<?php foreach($anchors as $anchor): ?>
+				<li> <a
+						href="#<?php echo esc_attr($anchor['anchor_id']); ?>"><?php echo esc_html($anchor['anchor_label']); ?></a>
+				</li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	</section>
+	<?php endif; ?>
 
-<?php echo get_template_part('modules/common/breadcrumb'); ?>
-
-<?php if(get_field('intro')) : ?>
-    <?php
-        $intro = get_field('intro');
-        $title = $intro['title'];
-        $description = $intro['description'];
-        $image = $intro['image'];
+	<?php
+    $intro_title = get_field('about_intro_title');
+    $intro_content = get_field('about_intro_content');
+    $intro_gallery = get_field('about_intro_gallery');
     ?>
-    <section class="section-about-us section-py">
-        <div class="container-1600"> 
-            <div class="about-us flex -lg:flex-col items-stretch">
-                <div class="about-us-content w-full lg:w-[calc(680/1600*100%)] flex flex-col gap-y-6 py-5 lg:pr-base xl:rem:pr-[calc(80px-12px)] xl:rem:py-[57px]"> 
-                    <h1 class="about-us-title heading-1"><?php echo $title ? $title : __('Về chúng tôi','canhcamtheme'); ?></h1>
-                    <?php if($description): ?>
-                    <div class="block-content lg:flex-[1_1_0] lg:overflow-auto overflow-scroll-1 lg:pr-3"> 
-                        <div class="flex flex-col gap-y-3 text-body-1"> 
-                            <?php echo $description; ?>
-                        </div>
-                    </div>
-                    <?php endif; ?>
-                </div>
-                <?php if($image): ?>
-                    <div class="about-us-img w-full lg:w-[calc(920/1600*100%)]"> 
-                        <div class="block-img img-ratio ratio:pt-[613.33_920] rounded-lg">
-                            <img class="lozad undefined" data-src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>"/>
-                        </div>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div>
-    </section>
-<?php endif; ?>
+	<section class="section-introduce-2 section-py bg-[#F3F3FD]" id="<?php echo esc_attr($id_section_intro); ?>">
+		<div class="wrap-container max-w-full w-full xl:rem:px-[111px] px-[16px] mx-auto">
+			<div class="wrapper flex items-center xl:gap-0 gap-base">
+				<div class="col-left lg:w-6/12 xl:pr-[1.4rem]">
+					<?php if($intro_title): ?>
+					<h2 class="title heading-1 text-Primary-1 font-bold mb-base"><?php echo esc_html($intro_title); ?>
+					</h2>
+					<?php endif; ?>
+					<?php if($intro_content): ?>
+					<div class="format-content body-1 font-normal">
+						<?php echo $intro_content; ?>
+					</div>
+					<?php endif; ?>
+				</div>
+				<?php if($intro_gallery): ?>
+				<div class="col-right lg:w-6/12 xl:pl-[8.7rem] xl:mr-[2.2rem]">
+					<div class="swiper slider-introduce relative">
+						<div class="swiper-wrapper">
+							<?php foreach($intro_gallery as $img): ?>
+							<div class="swiper-slide">
+								<div class="img img-ratio ratio:pt-[453_680]">
+									<img class="lozad" data-src="<?php echo esc_url($img['url']); ?>"
+										alt="<?php echo esc_attr($img['alt']); ?>" />
+								</div>
+							</div>
+							<?php endforeach; ?>
+						</div>
+						<div class="wrap-button-slide">
+							<div class="btn btn-sw-1 btn-prev"></div>
+							<div class="btn btn-sw-1 btn-next"></div>
+						</div>
+					</div>
+				</div>
+				<?php endif; ?>
+			</div>
+		</div>
+	</section>
 
-<?php if(get_field('vision_and_mission')) : ?>
-    <?php
-        $vision_and_mission = get_field('vision_and_mission');
-        $background = $vision_and_mission['background'];
-        $items = $vision_and_mission['items'];
+	<?php
+    $stats_title = get_field('about_stats_title');
+    $stats_list = get_field('about_stats_list');
+    if($stats_list):
     ?>
-    <section class="section-vision-mission">
-        <div setBackground="<?php echo $background['url']; ?>" class="vision-mission bg-cover bg-center bg-no-repeat">
-            <div class="container-1600">
-                <div class="vision-mission-content grid grid-cols-1 md:grid-cols-2 rem:min-h-[611px] relative z-2">
-                    <?php foreach($items as $item): ?>
-                        <div class="vision-mission-item flex-center flex-col text-center">
-                            <div class="block-icon w-20 h-20 lg:w-25 lg:h-25">
-                                <img class="lozad undefined max-w-full" data-src="<?php echo $item['icon']['url']; ?>" alt="<?php echo $item['icon']['alt']; ?>"/>
-                            </div>
-                            <h2 class="vision-title heading-1 text-white mt-10"><?php echo $item['title']; ?></h2>
-                            <div class="vision-desc text-body-1 mt-4 line-clamp-5 text-white"><?php echo $item['description']; ?></div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </div>
-    </section>
-<?php endif; ?>
+	<section class="section-introduce-3 section-py">
+		<div class="container-fluid">
+			<?php if($stats_title): ?>
+			<h2 class="title heading-1 text-Primary-1 font-bold mb-base text-center">
+				<?php echo esc_html($stats_title); ?></h2>
+			<?php endif; ?>
+			<div class="wrapper grid lg:grid-cols-4 grid-cols-2 gap-base">
+				<?php foreach($stats_list as $stat): 
+                    $s_icon = $stat['stat_icon'];
+                ?>
+				<div
+					class="item rounded-5 bg-Utility-gray-50 xl:px-8 xl:py-7 p-5 rem:w-[480px] xl:rem:h-[320px] h-full">
+					<div class="wrap-count-top">
+						<div class="icon sq-20 inline-flex items-center justify-center rem:px-[10px] rem:py-[12px]">
+							<?php if($s_icon): ?><img class="img-svg" src="<?php echo esc_url($s_icon['url']); ?>"
+								alt="" /><?php endif; ?>
+						</div>
+						<div class="count-statistical flex heading-banner text-Primary-3 font-bold tabular-nums">
+							<span class="countup"
+								data-number="<?php echo esc_attr($stat['stat_number']); ?>"></span><span><?php echo esc_html($stat['stat_suffix']); ?></span>
+						</div>
+						<div class="title heading-4 font-semibold text-Utility-gray-950-maintext">
+							<?php echo esc_html($stat['stat_label']); ?></div>
+					</div>
+					<div class="home-about-info">
+						<div class="desc">
+							<p><?php echo esc_html($stat['stat_desc']); ?></p>
+						</div>
+					</div>
+				</div>
+				<?php endforeach; ?>
+			</div>
+		</div>
+	</section>
+	<?php endif; ?>
 
-<?php if(get_field('history')) : ?>
-    <?php 
-    $history = get_field('history');
-    $title = $history['title'];
-    $timeline = $history['history_line'];
+	<?php
+    $vis_bg = get_field('about_vision_bg');
+    $vis_list = get_field('about_vision_list');
+    if($vis_list):
     ?>
-    <section class="section-his-formation section-py">
-        <div class="container-1600">  
-            <div class="his-formation flex flex-col gap-base">
-                <h2 class="his-formation-title heading-1 text-center"><?php echo $title ? $title : __('Lịch sử hình thành và phát triển','canhcamtheme'); ?></h2>
-                <?php if($timeline): ?>
-                    <div class="swiper swiper-thumb-timeline w-full before:content-[''] before:block before:absolute before:rem:top-[calc(28px/2)] before:left-0 before:-z-1 before:w-full before:border-t before:border-utility-gray-200">
-                        <ul class="swiper-wrapper timeline-list">
-                            <?php foreach($timeline as $item): ?>
-                                <li class="swiper-slide timeline-item">
-                                    <div class="child group flex-center flex-col gap-y-4 select-none cursor-pointer "> 
-                                        <span class="icon-round flex-center w-7 h-7 rounded-full group-hover:bg-primary-2 transition-300 before:content-[''] before:block before:w-4 before:h-4 before:rounded-full before:bg-utility-gray-200"></span>
-                                        <span class="content heading-2 text-utility-gray-300 transition-300 group-hover:text-primary-2"><?php echo $item['year']; ?></span>
-                                    </div>
-                                </li>
-                            <?php endforeach; ?> 
-                        </ul>
-                    </div>
-                    <div class="block-his-formation-slide relative">
-                        <div class="swiper swiper-his-formation w-full relative">
-                            <ul class="swiper-wrapper"> 
-                                <?php foreach($timeline as $item): ?>
-                                    <li class="swiper-slide history-item">
-                                        <div class="child grid grid-cols-1 md:grid-cols-2 items-center p-5 md:p-8 rounded-lg bg-utility-gray-50">
-                                            <div class="img-thumb img-ratio ratio:pt-[512_768] rounded-lg">
-                                                <img class="lozad undefined" data-src="<?php echo $item['image']['url']; ?>" alt="<?php echo $item['image']['alt']; ?>"/>
-                                            </div>
-                                            <div class="block-info -md:pt-5 md:pl-10 lg:pl-16">
-                                                <h3 class="history-title heading-3 -md:text-body-5"><?php echo $item['date']; ?></h3>
-                                                <div class="history-desc text-body-1 mt-6 -md:mt-4">
-                                                    <p><?php echo $item['description']; ?></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                            
-                        </div>
-                        <div class="wrap-button-slide static-mobile">                                   
-                            <button class="btn slide btn-prev"><i class="fa-regular fa-arrow-left"></i>
-                            </button>
-                            <button class="btn slide btn-next"><i class="fa-regular fa-arrow-right"></i>	
-                            </button>
-                        </div>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div>
-    </section>
-<?php endif; ?>
+	<section class="section-introduce-4 section-py" id="<?php echo esc_attr($id_section_vision); ?>"
+		<?php echo $vis_bg ? 'setBackground="'.esc_url($vis_bg['url']).'"' : ''; ?>>
+		<div class="container">
+			<div class="wrapper grid grid-cols-2 gap-base">
+				<?php foreach($vis_list as $vis): 
+                    $v_icon = $vis['vision_icon'];
+                ?>
+				<div class="item flex flex-col justify-center items-center text-center">
+					<div class="icon mb-5 sq-24 inline-flex items-center justify-center">
+						<?php if($v_icon): ?><img class="img-svg w-full h-full object-contain"
+							src="<?php echo esc_url($v_icon['url']); ?>" alt=""><?php endif; ?>
+					</div>
+					<div class="content mt-5">
+						<div class="title heading-2 text-Primary-1 font-bold mb-5">
+							<?php echo esc_html($vis['vision_title']); ?></div>
+						<div class="desc body-1 font-normal">
+							<p><?php echo wp_kses_post($vis['vision_desc']); ?></p>
+						</div>
+					</div>
+				</div>
+				<?php endforeach; ?>
+			</div>
+		</div>
+	</section>
+	<?php endif; ?>
 
-<?php if(get_field('organization')) : ?>
-    <?php
-    $organization = get_field('organization');
-    $title = $organization['title'];
-    $image = $organization['image'];
+	<?php
+    $his_title = get_field('about_history_title');
+    $his_list = get_field('about_history_list');
+    if($his_list):
     ?>
-    <section class="section-org-structure section-py bg-utility-gray-50">
-        <div class="container-1600"> 
-            <div class="org-structure">
-                <h2 class="org-structure-title heading-1 text-center"><?php echo $title ? $title : __('Cơ cấu tổ chức','canhcamtheme'); ?></h2>
-                <div class="org-structure-img img-ratio ratio:pt-[496_1600] mt-base"><img class="lozad !object-contain" data-src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>"/>
-                </div>
-            </div>
-        </div>
-    </section>
-<?php endif; ?>
+	<section class="section-his-formation section-py bg-Primary-1" id="<?php echo esc_attr($id_section_history); ?>">
+		<div class="container-fluid default-container-js">
+			<div class="his-formation flex flex-col gap-base">
+				<?php if($his_title): ?>
+				<h2 class="text-white font-bold heading-1 text-center"><?php echo esc_html($his_title); ?></h2>
+				<?php endif; ?>
+				<div class="block-his-formation-slide relative" stick-to-edge="right" unstick-min="1024">
+					<div class="swiper swiper-his-formation w-full">
+						<ul class="swiper-wrapper">
+							<?php foreach($his_list as $his): 
+                                $h_img = $his['history_image'];
+                            ?>
+							<li class="swiper-slide history-item">
+								<div
+									class="child grid md:grid-cols-[41.21%_1fr] grid-cols-1 items-center rounded-6 overflow-hidden p-4 md:p-0">
+									<div class="img-thumb img-ratio">
+										<?php if($h_img): ?><img class="lozad"
+											data-src="<?php echo esc_url($h_img['url']); ?>" alt="" /><?php endif; ?>
+									</div>
+									<div class="block-info -md:pt-5 md:pl-10 lg:rem:pl-[53px] text-white lg:pr-10 pr-4">
+										<h3 class="history-title heading-banner font-bold mb-4">
+											<?php echo esc_html($his['history_year']); ?></h3>
+										<p class="history-desc body-2 font-normal">
+											<?php echo wp_kses_post($his['history_desc']); ?>
+										</p>
+									</div>
+								</div>
+							</li>
+							<?php endforeach; ?>
+						</ul>
+					</div>
+					<div class="wrap-button-slide">
+						<div class="btn btn-sw-1 btn-prev secondary"></div>
+						<div class="btn btn-sw-1 btn-next secondary"></div>
+					</div>
+				</div>
+				<div class="swiper swiper-thumb-timeline w-full relative">
+					<ul class="swiper-wrapper timeline-list">
+						<?php foreach($his_list as $his): ?>
+						<li class="swiper-slide timeline-item">
+							<div class="child group flex items-center flex-col gap-y-4 select-none cursor-pointer ">
+								<span
+									class="icon-round flex-center bg-transparent w-7 h-7 rounded-full transition-300 before:content-[''] before:block before:w-2 before:h-2 before:rounded-full before:bg-white"></span>
+							</div>
+						</li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+	<?php endif; ?>
 
-<?php if(get_field('member')) : ?>
-    <?php
-    $members = get_field('member');
-    $title = $members['title'];
-    $tabs = $members['tabs'];
+	<?php
+    $chart_title = get_field('about_chart_title');
+    $chart_img = get_field('about_chart_image');
+    if($chart_img):
     ?>
-    <section class="section-member-units section-py">
-        <div class="container-1600">
-            <div class="member-units wrap" data-toggle="tabslet">
-                <h2 class="member-units-title heading-1 text-center"><?php echo $title ? $title : __('Đơn vị thành viên ','canhcamtheme'); ?></h2>
-                <?php if($tabs): ?>
-                    <ul class="member-tab-list tabslet-tab flex flex-wrap justify-center gap-6 mt-6">
-                        <?php foreach($tabs as $index => $tab): ?>
-                            <li class="member-tab-item <?php if($index == 0) echo 'active'; ?>"><a class="btn-secondary btn tab" href="#tab-<?php echo $index + 1 ;?>"><span><?php echo $tab['tab_name']; ?></span></a></li>
-                        <?php endforeach; ?>
-                    </ul>
-                    <?php foreach($tabs as $index => $tab): ?>
-                        <div class="member-unit-main tabslet-content -md:gap-base flex flex-wrap mt-base" id="tab-<?php echo $index + 1 ;?>">
-                            <div class="member-content w-full md:w-[calc(667/1600*100%)] flex flex-col md:pr-base-24"> 
-                                <div class="child overflow-scroll-2 md:flex-[1_1_0] md:overflow-auto md:pr-4">
-                                    <ul class="member-content-list wrap-item-toggle active-first flex flex-col gap-y-4">
-                                        <?php foreach($tab['tab_items'] as $key => $item): ?>
-                                            <li class="member-content-item item-toggle p-6 rounded-lg bg-utility-gray-50 border border-transparent transition-300 <?php if($key == 0) echo 'active'; ?>">
-                                                <div class="block-header title flex-between text-utility-gray-500 overflow-hidden transition-300 select-none cursor-pointer <?php if($key == 0) echo 'active'; ?>">
-                                                    <span class="title-header heading-2 text-inherit"><?php echo $item['title']; ?></span>
-                                                    <span class="icon text-xl text-inherit transition-300 "><i class="fa-light fa-angle-down"></i></span>
-                                                </div>
-                                                <div class="block-mega-content pt-4 mt-4 border-t border-primary-2">
-                                                    <div class="flex flex-col gap-y-6">
-                                                        <?php if($item['info']): ?>
-                                                            <ul class="mega-content-list flex flex-col gap-y-2">
-                                                                <?php foreach($item['info'] as $info): ?>
-                                                                    <li class="mega-content-item flex gap-x-4">
-                                                                        <div class="icon text-xl text-primary-2 max-w-full">
-                                                                            <i class="fa-solid fa-<?php echo $info['icon']; ?>"></i>
-                                                                        </div>
-                                                                        <div class="content text-body-1">
-                                                                            <?php echo $info['text']; ?>
-                                                                        </div>
-                                                                    </li>
-                                                                <?php endforeach; ?>
-                                                            </ul>
-                                                        <?php endif; ?>
-                                                        <?php if($item['mission']): ?>
-                                                            <div class="mission flex flex-col gap-y-2">
-                                                                <span class="mission-title heading-5 text-primary-2"><?php echo $item['mission']['title']; ?></span>
-                                                                <?php if($item['mission']['content']): ?>
-                                                                    <ul class="mission-content-list flex flex-col gap-y-2 pl-5 text-body-1 list-disc">
-                                                                        <?php foreach($item['mission']['content'] as $content): ?>
-                                                                            <li class="mission-content-item">
-                                                                                <?php echo $content['text']; ?>
-                                                                            </li>
-                                                                        <?php endforeach; ?>
-                                                                    </ul>
-                                                                <?php endif; ?>
-                                                            </div>
-                                                        <?php endif; ?>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                </div>
-                            </div>
-                            <?php if($tab['image']): ?>
-                                <div class="branch-image w-full md:w-[calc(933/1600*100%)]">
-                                    <div class="block-img img-ratio ratio:pt-[524_933] rounded-2"><img class="lozad undefined" data-src="<?php echo $tab['image']['url']; ?>" alt="<?php echo $tab['image']['alt']; ?>"/>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    <?php endforeach; ?>
+	<section class="section-introduce-6 section-py" id="<?php echo esc_attr($id_section_chart); ?>">
+		<div class="container-fluid">
+			<?php if($chart_title): ?>
+			<h2 class="title heading-1 text-Primary-1 text-center font-bold mb-base">
+				<?php echo esc_html($chart_title); ?></h2>
+			<?php endif; ?>
+			<div class="img-chart">
+				<div class="img img-ratio ratio:pt-[413_1426]">
+					<img class="lozad" data-src="<?php echo esc_url($chart_img['url']); ?>"
+						alt="<?php echo esc_attr($chart_title); ?>" />
+				</div>
+			</div>
+		</div>
+	</section>
+	<?php endif; ?>
 
-                <?php endif; ?>
+	<?php
+    $manage_title = get_field('about_manage_title');
+    $manage_groups = get_field('about_manage_groups');
+    if($manage_groups):
+    ?>
+	<section class="section-introduce-7 section-py" id="<?php echo esc_attr($id_section_management); ?>">
+		<div class="container-fluid">
+			<h2 class="title heading-1 text-Primary-1 text-center font-bold mb-base">
+				<?php echo $manage_title ? esc_html($manage_title) : 'Ban lãnh đạo'; ?></h2>
+			<div class="wrapper-main rem:max-w-[1320px] w-full mx-auto flex flex-col gap-base">
+				<?php foreach($manage_groups as $group): ?>
+				<div class="column col-12" data-aos="fade-up" data-aos-delay="200">
+					<div class="title-role heading-3 text-Primary-3 text-center font-bold mb-5">
+						<?php echo esc_html($group['group_title']); ?></div>
+					<?php if($group['group_members']): ?>
+					<div class="row justify-center w-full">
+						<?php foreach($group['group_members'] as $member): 
+                             $mem_img = $member['member_image'];
+                        ?>
+						<div class="item-manage group col-lg-4">
+							<div class="item-inner p-5 bg-white rounded-6 overflow-hidden">
+								<div class="img img-ratio zoom-img rounded-4">
+									<?php if($mem_img): ?>
+									<img class="lozad" data-src="<?php echo esc_url($mem_img['url']); ?>"
+										alt="<?php echo esc_attr($member['member_name']); ?>" />
+									<?php endif; ?>
+								</div>
+								<div class="content pt-6 text-center">
+									<div class="title-wrapper">
+										<div class="title heading-3 font-bold text-Primary-1">
+											<?php echo esc_html($member['member_name']); ?></div>
+									</div>
+									<div class="role mt-2 text-Primary-3 font-normal">
+										<?php echo esc_html($member['member_role']); ?></div>
+								</div>
+							</div>
+						</div>
+						<?php endforeach; ?>
+					</div>
+					<?php endif; ?>
+				</div>
+				<?php endforeach; ?>
+			</div>
+		</div>
+	</section>
+	<?php endif; ?>
 
-                
-            </div>
-        </div>
-    </section>
-<?php endif; ?>
+	<?php
+    $part_title = get_field('about_partner_title');
+    $part_desc = get_field('about_partner_desc');
+    $part_list = get_field('about_partner_list');
+    if($part_list):
+    ?>
+	<section class="sectionn-parter section-py" id="<?php echo esc_attr($id_section_partners); ?>"
+		setBackground="<?php echo get_template_directory_uri(); ?>/UI/img/bg-partner.png">
+		<div class="container-fluid">
+			<div class="wrap-heading rem:max-w-[1000px] w-full text-center mb-base mx-auto">
+				<h2 class="title heading-1 text-Primary-1 font-bold mb-4">
+					<?php echo $part_title ? esc_html($part_title) : 'Khách hàng - Đối tác'; ?></h2>
+				<?php if($part_desc): ?>
+				<div class="desc body-1 font-normal">
+					<p><?php echo wp_kses_post($part_desc); ?></p>
+				</div>
+				<?php endif; ?>
+			</div>
+			<div class="slide-top">
+				<div class="swiper">
+					<div class="swiper-wrapper">
+						<?php foreach($part_list as $part): ?>
+						<div class="swiper-slide">
+							<div class="item-logo">
+								<div class="img img-ratio">
+									<img class="lozad" data-src="<?php echo esc_url($part['partner_logo']['url']); ?>"
+										alt="" />
+								</div>
+							</div>
+						</div>
+						<?php endforeach; ?>
+					</div>
+				</div>
+			</div>
+			<div class="slide-bottom">
+				<div class="swiper">
+					<div class="swiper-wrapper">
+						<?php foreach($part_list as $part): ?>
+						<div class="swiper-slide">
+							<div class="item-logo">
+								<div class="img img-ratio">
+									<img class="lozad" data-src="<?php echo esc_url($part['partner_logo']['url']); ?>"
+										alt="" />
+								</div>
+							</div>
+						</div>
+						<?php endforeach; ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<?php endif; ?>
+
+	<?php
+    $awar_title = get_field('about_award_title');
+    $awar_desc = get_field('about_award_desc');
+    $awar_list = get_field('about_award_list');
+    if($awar_list):
+    ?>
+	<section class="section-introduce-9 section-py" id="<?php echo esc_attr($id_section_award); ?>">
+		<div class="container-fluid">
+			<div class="wrap-heading text-center mb-base">
+				<h2 class="title heading-1 font-bold text-Primary-1 mb-4">
+					<?php echo $awar_title ? esc_html($awar_title) : 'Bằng khen - Giải thưởng'; ?></h2>
+				<?php if($awar_desc): ?>
+				<div class="desc body-2 font-normal">
+					<p><?php echo wp_kses_post($awar_desc); ?> </p>
+				</div>
+				<?php endif; ?>
+			</div>
+			<div class="swiper-column-auto relative swiper-loop autoplay">
+				<div class="swiper">
+					<div class="swiper-wrapper">
+						<?php foreach($awar_list as $aw): 
+                            $a_img = $aw['award_image'];
+                        ?>
+						<div class="swiper-slide">
+							<div class="item-award rounded-6 bg-Utility-gray-50 p-4 group">
+								<div class="img">
+									<?php if($a_img): ?>
+									<a class="img-ratio ratio:pt-[260_368] rounded-5 zoom-img"
+										href="<?php echo esc_url($a_img['url']); ?>" data-fancybox>
+										<img class="lozad" data-src="<?php echo esc_url($a_img['url']); ?>"
+											alt="<?php echo esc_attr($aw['award_title']); ?>" />
+									</a>
+									<?php endif; ?>
+								</div>
+								<div class="content mt-6 text-center">
+									<div class="title heading-4 font-semibold group-hover:text-Primary-3"> <a
+											href="#"><?php echo esc_html($aw['award_title']); ?></a></div>
+								</div>
+							</div>
+						</div>
+						<?php endforeach; ?>
+					</div>
+				</div>
+				<div class="arrow-button flex-center mt-base gap-2">
+					<div class="btn btn-sw-1 btn-prev"></div>
+					<div class="btn btn-sw-1 btn-next"></div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<?php endif; ?>
+</main>
 
 <?php get_footer(); ?>

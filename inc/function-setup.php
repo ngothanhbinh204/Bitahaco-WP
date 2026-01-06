@@ -16,6 +16,8 @@ define('THEME_URI', get_template_directory_uri());
 define('THEME_DIR', get_template_directory());
 define('THEME_INC', THEME_DIR . '/inc');
 
+require_once THEME_INC . '/class-header-menu-walker.php';
+
 /**
  * Run style and script
  */
@@ -72,6 +74,10 @@ if (!function_exists('canhcam_setup')) :
 		 */
 		add_theme_support('post-thumbnails');
 		// This theme uses wp_nav_menu() in one location.
+        register_nav_menus(array(
+            'header-menu' => esc_html__('Header Menu', 'canhcamtheme'),
+            'footer-menu' => esc_html__('Footer Menu', 'canhcamtheme'),
+        ));
 		/*
 		 * Switch default core markup for search form, comment form, and comments
 		 * to output valid HTML5.

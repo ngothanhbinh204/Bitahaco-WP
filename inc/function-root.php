@@ -9,6 +9,7 @@ function register_my_menu()
 		'header-top' => __('Menu top', 'canhcamtheme'),
 		'header-menu' => __('Menu chính', 'canhcamtheme'),
 		'menu-category' => __('Menu danh mục', 'canhcamtheme'),
+		'menu-quicklink' => __('Menu Liên kết nhanh', 'canhcamtheme'),
 		'footer-1' => __('Footer 1', 'canhcamtheme'),
 		'footer-2' => __('Footer 2', 'canhcamtheme'),
 		'footer-3' => __('Footer 3', 'canhcamtheme'),
