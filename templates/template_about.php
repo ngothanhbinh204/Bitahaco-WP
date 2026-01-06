@@ -4,8 +4,6 @@
  */
 get_header(); 
 
-$banner_img = get_field('about_banner_image');
-$banner_title = get_field('about_banner_title');
 $anchors = get_field('about_menu_anchors');
 
 $id_section_intro = get_field('id_section_intro') ?: '';
@@ -20,23 +18,7 @@ $id_section_award = get_field('id_section_award') ?: '';
 ?>
 
 <main>
-	<section class="section-banner-secondary">
-		<div class="block-banner img-ratio ratio:pt-[1_2] md:ratio:pt-[640_1920]">
-			<?php if($banner_img): ?>
-			<img class="lozad" data-src="<?php echo esc_url($banner_img['url']); ?>"
-				alt="<?php echo esc_attr($banner_img['alt']); ?>" />
-			<?php endif; ?>
-			<div class="content">
-				<div class="container-fluid">
-					<h2 class="title"><?php echo esc_html($banner_title ? $banner_title : get_the_title()); ?></h2>
-					<div class="global-breadcrumb">
-						<?php if(function_exists('rank_math_the_breadcrumbs')) rank_math_the_breadcrumbs(); ?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
+	<?php include get_template_directory() . '/modules/common/banner.php'; ?>
 	<?php if($anchors): ?>
 	<section class="section-scrollTo-active" id="menu-spy">
 		<div class="container-fluid">
