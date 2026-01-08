@@ -56,6 +56,13 @@ function add_field_select_banner()
 					'value' => 'category',
 				),
 			),
+			array(
+				array(
+					'param' => 'taxonomy',
+					'operator' => '==',
+					'value' => 'co-dong-category',
+				),
+			),
 		),
 	));
 	acf_add_local_field(array(
@@ -139,3 +146,51 @@ function add_theme_config_options()
 	));
 }
 add_action('acf/init', 'add_theme_config_options');
+
+function add_recruitment_page_fields() {
+    acf_add_local_field_group(array(
+        'key' => 'group_recruitment_page',
+        'title' => 'Cấu hình Trang Tuyển dụng',
+        'fields' => array(
+             // Intro Group
+            array(
+                'key' => 'field_career_intro',
+                'label' => 'Giới thiệu',
+                'name' => 'career_intro',
+                'type' => 'group',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_career_intro_title',
+                        'label' => 'Tiêu đề',
+                        'name' => 'title',
+                        'type' => 'text',
+                    ),
+                     array(
+                        'key' => 'field_career_intro_desc',
+                        'label' => 'Mô tả',
+                        'name' => 'description',
+                        'type' => 'wysiwyg', 
+                    ),
+                ),
+            ),
+             // Journey Image
+            array(
+                'key' => 'field_career_image',
+                'label' => 'Hình ảnh Journey',
+                'name' => 'career_image',
+                'type' => 'image',
+                'return_format' => 'array',
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'page_template',
+                    'operator' => '==',
+                    'value' => 'templates/template_recruitment.php',
+                ),
+            ),
+        ),
+    ));
+}
+add_action('acf/init', 'add_recruitment_page_fields');

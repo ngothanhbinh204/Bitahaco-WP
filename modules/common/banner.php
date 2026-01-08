@@ -1,18 +1,51 @@
 <?php
-$id_category = get_queried_object()->term_id;
-$taxonomy = get_queried_object()->taxonomy;
-if ($id_category) {
-	$id = $taxonomy . '_' . $id_category;
-} else {
-	$id = get_the_ID();
-}
-    $banners = get_field('banner_select_page', $id);
-    $banner_image = '';
-    $banner_alt = '';
-    $banner_title = get_the_title();
+$queried_object = get_queried_object();
+$id_category = 0;
+$taxonomy = '';
 
-    // Ưu tiên lấy từ Banner CPT được chọn
-    if ($banners) {
+// Kiểm tra nếu là Term (Danh mục)
+if ($queried_object instanceof WP_Term) {
+    $id_category = $queried_object->term_id;
+    $taxonomy = $queried_object->taxonomy;
+}
+
+$banner_image = '';
+$banner_alt = '';
+$banner_title = '';
+$banners = false;
+
+// Xử lý logic cho từng loại trang
+if ($id_category) {
+    // Trang taxonomy/category
+    $id = $taxonomy . '_' . $id_category;
+    $banners = get_field('banner_select_page', $id);
+    $banner_title = $queried_object->name;
+} elseif (is_post_type_archive()) {
+    // Trang Archive Post Type
+    $banner_title = post_type_archive_title('', false);
+    
+    // Trường hợp đặc biệt: Archive Cổ đông dùng banner từ Option Page
+    if (is_post_type_archive('co-dong')) {
+        $banner_option = get_field('shareholder_banner', 'option');
+        if ($banner_option) {
+            $banner_image = isset($banner_option['url']) ? $banner_option['url'] : '';
+            $banner_alt = isset($banner_option['alt']) ? $banner_option['alt'] : '';
+        }
+    }
+} elseif (is_home()) {
+    // Trang Blog
+    $id = get_option('page_for_posts');
+    $banners = get_field('banner_select_page', $id);
+    $banner_title = get_the_title($id);
+} else {
+    // Trang đơn (Page/Single)
+    $id = get_the_ID();
+    $banners = get_field('banner_select_page', $id);
+    $banner_title = get_the_title();
+}
+
+    // Ưu tiên lấy từ Banner CPT được chọn (nếu chưa có ảnh từ option)
+    if (empty($banner_image) && $banners) {
         // Lấy banner đầu tiên nếu chọn nhiều
         $banner_post = is_array($banners) ? $banners[0] : $banners;
         if ($banner_post) {
@@ -22,13 +55,13 @@ if ($id_category) {
             // $banner_title = get_the_title($banner_post->ID); 
 			// $banner_title = get_the_title();
         }
-    } else {
-        // Fallback: Lấy Featured Image của Page hiện tại nếu không chọn Banner
-        if (has_post_thumbnail()) {
-            $banner_image = get_the_post_thumbnail_url(get_the_ID(), 'full');
-            $thumb_id = get_post_thumbnail_id(get_the_ID());
-            $banner_alt = get_post_meta($thumb_id, '_wp_attachment_image_alt', true);
-        }
+    } 
+    
+    // Fallback: Lấy Featured Image của Page hiện tại nếu chưa có banner
+    if (empty($banner_image) && is_singular() && has_post_thumbnail()) {
+        $banner_image = get_the_post_thumbnail_url(get_the_ID(), 'full');
+        $thumb_id = get_post_thumbnail_id(get_the_ID());
+        $banner_alt = get_post_meta($thumb_id, '_wp_attachment_image_alt', true);
     }
 ?>
 

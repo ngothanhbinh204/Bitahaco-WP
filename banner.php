@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
     $banner_image = '';
     $banner_alt = '';
     $banner_title = '';
@@ -66,4 +66,4 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->

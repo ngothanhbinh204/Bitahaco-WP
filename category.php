@@ -163,12 +163,39 @@ $term = get_queried_object();
                 if ($total_pages > 1) : 
                 ?>
 			<ul class="pagination justify-center">
-				<?php for ($i = 1; $i <= min(3, $total_pages); $i++) : // Chỉ hiển thị tối đa 3 trang như HTML mẫu ?>
+				<?php 
+                // Previous
+                if ($current_page > 1):
+                    $prev_page = max(1, $current_page - 1);
+                ?>
 				<li
-					class="pagination-item flex-center w-10 md:w-12 h-10 md:h-12 border-2 border-Primary-2 rounded-1 heading-4 transition-300 hover:bg-Primary-1 hover:border-Primary-1 cursor-pointer <?php echo ($i == $current_page) ? 'active' : ''; ?>">
-					<a href="<?php echo esc_url(get_pagenum_link($i)); ?>"><?php echo $i; ?></a>
+					class="pagination-item flex-center w-10 md:w-12 h-10 md:h-12 border-2 border-Primary-2 rounded-1 heading-4 transition-300 hover:bg-Primary-1 hover:border-Primary-1 cursor-pointer">
+					<a href="<?php echo esc_url(get_pagenum_link($prev_page)); ?>" class="flex-center w-full h-full"><i
+							class="fa-regular fa-chevron-left"></i></a>
+				</li>
+				<?php endif; ?>
+
+				<?php for ($i = 1; $i <= $total_pages; $i++) : 
+                    $active = ($i == $current_page) ? 'active' : '';
+                ?>
+				<li
+					class="pagination-item flex-center w-10 md:w-12 h-10 md:h-12 border-2 border-Primary-2 rounded-1 heading-4 transition-300 hover:bg-Primary-1 hover:border-Primary-1 cursor-pointer <?php echo $active; ?>">
+					<a href="<?php echo esc_url(get_pagenum_link($i)); ?>"
+						class="flex-center w-full h-full"><?php echo $i; ?></a>
 				</li>
 				<?php endfor; ?>
+
+				<?php 
+                 // Next
+                 if ($current_page < $total_pages):
+                    $next_page = min($total_pages, $current_page + 1);
+                ?>
+				<li
+					class="pagination-item flex-center w-10 md:w-12 h-10 md:h-12 border-2 border-Primary-2 rounded-1 heading-4 transition-300 hover:bg-Primary-1 hover:border-Primary-1 cursor-pointer">
+					<a href="<?php echo esc_url(get_pagenum_link($next_page)); ?>" class="flex-center w-full h-full"><i
+							class="fa-regular fa-chevron-right"></i></a>
+				</li>
+				<?php endif; ?>
 			</ul>
 			<?php endif; ?>
 

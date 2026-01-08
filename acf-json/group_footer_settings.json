@@ -405,25 +405,42 @@
             "collapsed": "",
             "sub_fields": [
                 {
-                    "key": "field_footer_social_icon",
-                    "label": "Icon Class",
+                    "key": "field_695f2acf8a8ed",
+                    "label": "Icon",
                     "name": "icon",
                     "aria-label": "",
-                    "type": "text",
-                    "instructions": "FontAwesome icon class",
-                    "required": false,
-                    "conditional_logic": false,
+                    "type": "select",
+                    "instructions": "Fontawesome",
+                    "required": 0,
+                    "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
                         "class": "",
                         "id": ""
                     },
-                    "placeholder": "fa-brands fa-facebook-f",
-                    "parent_repeater": "field_footer_social_links",
-                    "default_value": "",
-                    "maxlength": "",
-                    "prepend": "",
-                    "append": ""
+                    "choices": {
+                        "location-dot": "Location",
+                        "envelope": "Mail",
+                        "earth-americas": "Earth",
+                        "facebook": "Facebook",
+                        "youtube": "YouTube",
+                        "tiktok": "TikTok",
+                        "linkedin": "LinkedIn",
+                        "instagram": "Instagram",
+                        "twitter": "Twitter (X)",
+                        "z": "Z"
+                    },
+                    "default_value": "location-dot",
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "allow_in_bindings": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "create_options": 0,
+                    "save_options": 0,
+                    "parent_repeater": "field_footer_social_links"
                 },
                 {
                     "key": "field_footer_social_url",
@@ -620,24 +637,40 @@
             "collapsed": "",
             "sub_fields": [
                 {
-                    "key": "field_footer_fixed_cta_icon",
-                    "label": "Icon Class",
+                    "key": "field_695f2d65b6413",
+                    "label": "Icon",
                     "name": "icon",
                     "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": false,
+                    "type": "select",
+                    "instructions": "Fontawesome",
+                    "required": 0,
+                    "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
                         "class": "",
                         "id": ""
                     },
-                    "placeholder": "fa-brands fa-facebook",
-                    "default_value": "",
-                    "maxlength": "",
-                    "prepend": "",
-                    "append": "",
+                    "choices": {
+                        "location-dot": "Location",
+                        "envelope": "Mail",
+                        "earth-americas": "Earth",
+                        "facebook": "Facebook",
+                        "youtube": "YouTube",
+                        "tiktok": "TikTok",
+                        "linkedin": "LinkedIn",
+                        "instagram": "Instagram",
+                        "twitter": "Twitter (X)"
+                    },
+                    "default_value": "location-dot",
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "allow_in_bindings": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "create_options": 0,
+                    "save_options": 0,
                     "parent_repeater": "field_footer_fixed_cta"
                 },
                 {
@@ -678,5 +711,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1767688781
+    "modified": 1767845900
 }

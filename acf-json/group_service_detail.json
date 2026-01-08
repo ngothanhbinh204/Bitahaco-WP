@@ -1,0 +1,287 @@
+{
+    "key": "group_service_detail",
+    "title": "Chi tiết Lĩnh vực hoạt động",
+    "fields": [
+        {
+            "key": "field_service_intro_tab",
+            "label": "Giới thiệu chung",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_service_intro_text",
+            "label": "Mô tả ngắn",
+            "name": "service_intro_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Hiển thị bên dưới tiêu đề (VD: Want to discuss more about this service?)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": "br"
+        },
+        {
+            "key": "field_service_gallery",
+            "label": "Thư viện ảnh",
+            "name": "service_gallery",
+            "aria-label": "",
+            "type": "gallery",
+            "instructions": "Slider hình ảnh bên phải mô tả ngắn",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "insert": "append",
+            "library": "all",
+            "min": 0,
+            "max": 0,
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
+        },
+        {
+            "key": "field_service_role_tab",
+            "label": "Vai trò & Nhiệm vụ",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_service_tabs",
+            "label": "Danh sách Tab",
+            "name": "service_tabs",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "field_tab_title",
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "Thêm Tab",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_tab_title",
+                    "label": "Tiêu đề Tab",
+                    "name": "tab_title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Hiển thị trên thanh điều hướng tab",
+                    "required": 1,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_service_tabs"
+                },
+                {
+                    "key": "field_tab_heading",
+                    "label": "Tiêu đề chính",
+                    "name": "tab_heading",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Tiêu đề lớn trong nội dung",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_service_tabs"
+                },
+                {
+                    "key": "field_tab_content",
+                    "label": "Nội dung mô tả",
+                    "name": "tab_content",
+                    "aria-label": "",
+                    "type": "wysiwyg",
+                    "instructions": "Đoạn văn bản giới thiệu",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "tabs": "all",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "default_value": "",
+                    "delay": 0,
+                    "parent_repeater": "field_service_tabs"
+                },
+                {
+                    "key": "field_tab_image",
+                    "label": "Hình ảnh minh họa",
+                    "name": "tab_image",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "preview_size": "medium",
+                    "library": "all",
+                    "min_width": 0,
+                    "min_height": 0,
+                    "min_size": 0,
+                    "max_width": 0,
+                    "max_height": 0,
+                    "max_size": 0,
+                    "mime_types": "",
+                    "parent_repeater": "field_service_tabs"
+                },
+                {
+                    "key": "field_tab_sub_heading",
+                    "label": "Tiêu đề phụ",
+                    "name": "tab_sub_heading",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Tiêu đề nhỏ bên phải (VD: Building)",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_service_tabs"
+                },
+                {
+                    "key": "field_tab_item_list",
+                    "label": "Danh sách nội dung",
+                    "name": "tab_item_list",
+                    "aria-label": "",
+                    "type": "repeater",
+                    "instructions": "",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "button_label": "Thêm mục",
+                    "min": 0,
+                    "max": 0,
+                    "rows_per_page": 20,
+                    "layout": "table",
+                    "collapsed": "",
+                    "sub_fields": [
+                        {
+                            "key": "field_tab_item_text",
+                            "label": "Nội dung",
+                            "name": "item_text",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "parent_repeater": "field_tab_item_list"
+                        }
+                    ],
+                    "parent_repeater": "field_service_tabs"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "linh-vuc"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": false,
+    "modified": 1767802652
+}

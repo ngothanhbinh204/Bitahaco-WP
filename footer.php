@@ -144,7 +144,11 @@ $policy_links = get_field('footer_policy_links', 'option');
 						<?php foreach ($social_links as $social): ?>
 						<li>
 							<a href="<?php echo esc_url($social['url']); ?>" target="_blank" rel="noopener noreferrer">
-								<i class="<?php echo esc_attr($social['icon']); ?>"></i>
+								<?php if(strpos($social['icon'], 'facebook') !== false) : ?>
+								<i class="fa-brands fa-<?php echo $social['icon']; ?>"></i>
+								<?php else : ?>
+								<i class="fa-brands fa-<?php echo $social['icon']; ?>"></i>
+								<?php endif; ?>
 							</a>
 						</li>
 						<?php endforeach; ?>
@@ -228,7 +232,11 @@ if (!$footer_fixed_cta) {
 		title="<?php echo esc_attr($link['title']); ?>" <?php endif; ?>>
 		<div class="btn-icon">
 			<div class="icon">
-				<i class="<?php echo esc_attr($icon); ?>"></i>
+				<?php if(strpos($icon, 'facebook') !== false) : ?>
+				<i class="fa-brands fa-<?php echo $icon; ?>"></i>
+				<?php else : ?>
+				<i class="fa-solid fa-<?php echo $icon; ?>"></i>
+				<?php endif; ?>
 			</div>
 		</div>
 	</a>

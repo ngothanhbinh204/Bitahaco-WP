@@ -1,90 +1,37 @@
 <?php
-/**
- * Register Custom Post Type: Dự án
- */
-function create_du_an_post_type() {
-    $labels = array(
-        'name'                  => __('Dự án', 'canhcamtheme'),
-        'singular_name'         => __('Dự án', 'canhcamtheme'),
-        'menu_name'             => __('Dự án', 'canhcamtheme'),
-        'name_admin_bar'        => __('Dự án', 'canhcamtheme'),
-        'archives'              => __('Lưu trữ Dự án', 'canhcamtheme'),
-        'attributes'            => __('Thuộc tính Dự án', 'canhcamtheme'),
-        'parent_item_colon'     => __('Dự án cha:', 'canhcamtheme'),
-        'all_items'             => __('Tất cả Dự án', 'canhcamtheme'),
-        'add_new_item'          => __('Thêm Dự án mới', 'canhcamtheme'),
-        'add_new'               => __('Thêm mới', 'canhcamtheme'),
-        'new_item'              => __('Dự án mới', 'canhcamtheme'),
-        'edit_item'             => __('Sửa Dự án', 'canhcamtheme'),
-        'update_item'           => __('Cập nhật Dự án', 'canhcamtheme'),
-        'view_item'             => __('Xem Dự án', 'canhcamtheme'),
-        'view_items'            => __('Xem các Dự án', 'canhcamtheme'),
-        'search_items'          => __('Tìm kiếm Dự án', 'canhcamtheme'),
-        'not_found'             => __('Không tìm thấy', 'canhcamtheme'),
-        'not_found_in_trash'    => __('Không tìm thấy trong thùng rác', 'canhcamtheme'),
-        'featured_image'        => __('Ảnh đại diện', 'canhcamtheme'),
-        'set_featured_image'    => __('Đặt ảnh đại diện', 'canhcamtheme'),
-        'remove_featured_image' => __('Xóa ảnh đại diện', 'canhcamtheme'),
-        'use_featured_image'    => __('Sử dụng làm ảnh đại diện', 'canhcamtheme'),
-        'insert_into_item'      => __('Chèn vào Dự án', 'canhcamtheme'),
-        'uploaded_to_this_item' => __('Đã tải lên cho Dự án này', 'canhcamtheme'),
-        'items_list'            => __('Danh sách Dự án', 'canhcamtheme'),
-        'items_list_navigation' => __('Điều hướng danh sách Dự án', 'canhcamtheme'),
-        'filter_items_list'     => __('Lọc danh sách Dự án', 'canhcamtheme'),
-    );
-    
-    $args = array(
-        'labels'              => $labels,
-        'public'              => true,
-        'publicly_queryable'  => true,
-        'show_ui'             => true,
-        'show_in_menu'        => true,
-        'query_var'           => true,
-        'rewrite'             => array('slug' => 'du-an'),
-        'capability_type'     => 'post',
-        'has_archive'         => true,
-        'hierarchical'        => false,
-        'menu_position'       => null,
-        'supports'            => array('title', 'editor', 'thumbnail', 'excerpt'),
-        'menu_icon'           => 'dashicons-portfolio',
-    );
-
-    register_post_type('du-an', $args);
-}
-add_action('init', 'create_du_an_post_type');
 
 /**
- * Register Custom Post Type for Tin cổ đông
+ * Register Custom Post Type for Cổ đông
  */
 function create_co_dong_post_type() {
     $labels = array(
-        'name'                  => __('Tin cổ đông', 'canhcamtheme'),
-        'singular_name'         => __('Tin cổ đông', 'canhcamtheme'),
-        'menu_name'             => __('Tin cổ đông', 'canhcamtheme'),
-        'name_admin_bar'        => __('Tin cổ đông', 'canhcamtheme'),
-        'archives'              => __('Lưu trữ Tin cổ đông', 'canhcamtheme'),
-        'attributes'            => __('Thuộc tính Tin cổ đông', 'canhcamtheme'),
-        'parent_item_colon'     => __('Tin cổ đông cha:', 'canhcamtheme'),
-        'all_items'             => __('Tất cả Tin cổ đông', 'canhcamtheme'),
-        'add_new_item'          => __('Thêm Tin cổ đông mới', 'canhcamtheme'),
+        'name'                  => __('Cổ đông', 'canhcamtheme'),
+        'singular_name'         => __('Cổ đông', 'canhcamtheme'),
+        'menu_name'             => __('Cổ đông', 'canhcamtheme'),
+        'name_admin_bar'        => __('Cổ đông', 'canhcamtheme'),
+        'archives'              => __('Lưu trữ Cổ đông', 'canhcamtheme'),
+        'attributes'            => __('Thuộc tính Cổ đông', 'canhcamtheme'),
+        'parent_item_colon'     => __('Cổ đông cha:', 'canhcamtheme'),
+        'all_items'             => __('Tất cả Cổ đông', 'canhcamtheme'),
+        'add_new_item'          => __('Thêm Cổ đông mới', 'canhcamtheme'),
         'add_new'               => __('Thêm mới', 'canhcamtheme'),
-        'new_item'              => __('Tin cổ đông mới', 'canhcamtheme'),
-        'edit_item'             => __('Sửa Tin cổ đông', 'canhcamtheme'),
-        'update_item'           => __('Cập nhật Tin cổ đông', 'canhcamtheme'),
-        'view_item'             => __('Xem Tin cổ đông', 'canhcamtheme'),
-        'view_items'            => __('Xem các Tin cổ đông', 'canhcamtheme'),
-        'search_items'          => __('Tìm kiếm Tin cổ đông', 'canhcamtheme'),
+        'new_item'              => __('Cổ đông mới', 'canhcamtheme'),
+        'edit_item'             => __('Sửa Cổ đông', 'canhcamtheme'),
+        'update_item'           => __('Cập nhật Cổ đông', 'canhcamtheme'),
+        'view_item'             => __('Xem Cổ đông', 'canhcamtheme'),
+        'view_items'            => __('Xem các Cổ đông', 'canhcamtheme'),
+        'search_items'          => __('Tìm kiếm Cổ đông', 'canhcamtheme'),
         'not_found'             => __('Không tìm thấy', 'canhcamtheme'),
         'not_found_in_trash'    => __('Không tìm thấy trong thùng rác', 'canhcamtheme'),
         'featured_image'        => __('Ảnh đại diện', 'canhcamtheme'),
         'set_featured_image'    => __('Đặt ảnh đại diện', 'canhcamtheme'),
         'remove_featured_image' => __('Xóa ảnh đại diện', 'canhcamtheme'),
         'use_featured_image'    => __('Sử dụng làm ảnh đại diện', 'canhcamtheme'),
-        'insert_into_item'      => __('Chèn vào Tin cổ đông', 'canhcamtheme'),
-        'uploaded_to_this_item' => __('Đã tải lên cho Tin cổ đông này', 'canhcamtheme'),
-        'items_list'            => __('Danh sách Tin cổ đông', 'canhcamtheme'),
-        'items_list_navigation' => __('Điều hướng danh sách Tin cổ đông', 'canhcamtheme'),
-        'filter_items_list'     => __('Lọc danh sách Tin cổ đông', 'canhcamtheme'),
+        'insert_into_item'      => __('Chèn vào Cổ đông', 'canhcamtheme'),
+        'uploaded_to_this_item' => __('Đã tải lên cho Cổ đông này', 'canhcamtheme'),
+        'items_list'            => __('Danh sách Cổ đông', 'canhcamtheme'),
+        'items_list_navigation' => __('Điều hướng danh sách Cổ đông', 'canhcamtheme'),
+        'filter_items_list'     => __('Lọc danh sách Cổ đông', 'canhcamtheme'),
     );
     
     $args = array(
@@ -94,7 +41,7 @@ function create_co_dong_post_type() {
         'show_ui'             => true,
         'show_in_menu'        => true,
         'query_var'           => true,
-        'rewrite'             => array('slug' => 'quan-he-co-dong'),
+        'rewrite'             => array('slug' => 'co-dong'),
         'capability_type'     => 'post',
         'has_archive'         => true,
         'hierarchical'        => false,
@@ -106,10 +53,10 @@ function create_co_dong_post_type() {
 
     register_post_type('co-dong', $args);
     
-    // Register taxonomy for Tin cổ đông
+    // Register taxonomy for Cổ đông
     $taxonomy_labels = array(
-        'name'              => __('Danh mục Tin cổ đông', 'canhcamtheme'),
-        'singular_name'     => __('Danh mục Tin cổ đông', 'canhcamtheme'),
+        'name'              => __('Danh mục Cổ đông', 'canhcamtheme'),
+        'singular_name'     => __('Danh mục Cổ đông', 'canhcamtheme'),
         'search_items'      => __('Tìm kiếm Danh mục', 'canhcamtheme'),
         'all_items'         => __('Tất cả Danh mục', 'canhcamtheme'),
         'parent_item'       => __('Danh mục cha', 'canhcamtheme'),
@@ -176,7 +123,7 @@ function create_tuyen_dung_post_type() {
         'query_var'           => true,
         'rewrite'             => array('slug' => 'tuyen-dung'),
         'capability_type'     => 'post',
-        'has_archive'         => true,
+        'has_archive'         => false,
         'hierarchical'        => false,
         'menu_position'       => null,
         'supports'            => array('title', 'editor' , 'thumbnail', 'excerpt'),
@@ -186,3 +133,57 @@ function create_tuyen_dung_post_type() {
     register_post_type('tuyen-dung', $args);
 }
 add_action('init', 'create_tuyen_dung_post_type');
+
+/**
+ * Register Custom Post Type: Lĩnh vực hoạt động
+ */
+function create_linh_vuc_post_type() {
+    $labels = array(
+        'name'                  => __('Lĩnh vực hoạt động', 'canhcamtheme'),
+        'singular_name'         => __('Lĩnh vực', 'canhcamtheme'),
+        'menu_name'             => __('Lĩnh vực hoạt động', 'canhcamtheme'),
+        'name_admin_bar'        => __('Lĩnh vực hoạt động', 'canhcamtheme'),
+        'archives'              => __('Lưu trữ Lĩnh vực', 'canhcamtheme'),
+        'attributes'            => __('Thuộc tính Lĩnh vực', 'canhcamtheme'),
+        'parent_item_colon'     => __('Lĩnh vực cha:', 'canhcamtheme'),
+        'all_items'             => __('Tất cả Lĩnh vực', 'canhcamtheme'),
+        'add_new_item'          => __('Thêm Lĩnh vực mới', 'canhcamtheme'),
+        'add_new'               => __('Thêm mới', 'canhcamtheme'),
+        'new_item'              => __('Lĩnh vực mới', 'canhcamtheme'),
+        'edit_item'             => __('Sửa Lĩnh vực', 'canhcamtheme'),
+        'update_item'           => __('Cập nhật Lĩnh vực', 'canhcamtheme'),
+        'view_item'             => __('Xem Lĩnh vực', 'canhcamtheme'),
+        'view_items'            => __('Xem các Lĩnh vực', 'canhcamtheme'),
+        'search_items'          => __('Tìm kiếm Lĩnh vực', 'canhcamtheme'),
+        'not_found'             => __('Không tìm thấy', 'canhcamtheme'),
+        'not_found_in_trash'    => __('Không tìm thấy trong thùng rác', 'canhcamtheme'),
+        'featured_image'        => __('Ảnh đại diện', 'canhcamtheme'),
+        'set_featured_image'    => __('Đặt ảnh đại diện', 'canhcamtheme'),
+        'remove_featured_image' => __('Xóa ảnh đại diện', 'canhcamtheme'),
+        'use_featured_image'    => __('Sử dụng làm ảnh đại diện', 'canhcamtheme'),
+        'insert_into_item'      => __('Chèn vào Lĩnh vực', 'canhcamtheme'),
+        'uploaded_to_this_item' => __('Đã tải lên cho Lĩnh vực này', 'canhcamtheme'),
+        'items_list'            => __('Danh sách Lĩnh vực', 'canhcamtheme'),
+        'items_list_navigation' => __('Điều hướng danh sách Lĩnh vực', 'canhcamtheme'),
+        'filter_items_list'     => __('Lọc danh sách Lĩnh vực', 'canhcamtheme'),
+    );
+    
+    $args = array(
+        'labels'              => $labels,
+        'public'              => true,
+        'publicly_queryable'  => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'query_var'           => true,
+        'rewrite'             => array('slug' => 'linh-vuc'),
+        'capability_type'     => 'post',
+        'has_archive'         => true,
+        'hierarchical'        => false,
+        'menu_position'       => null,
+        'supports'            => array('title', 'editor', 'thumbnail', 'excerpt'),
+        'menu_icon'           => 'dashicons-hammer',
+    );
+
+    register_post_type('linh-vuc', $args);
+}
+add_action('init', 'create_linh_vuc_post_type');
