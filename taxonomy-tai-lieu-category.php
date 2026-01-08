@@ -1,6 +1,7 @@
 <?php get_header(); ?>
 <?php 
-$current_term_id = 0; // Represents "All"
+$term = get_queried_object(); 
+$current_term_id = $term->term_id;
 $selected_year = isset($_GET['d_year']) ? sanitize_text_field($_GET['d_year']) : '';
 $current_page = get_query_var('paged') ? get_query_var('paged') : 1;
 ?>
@@ -11,24 +12,39 @@ $current_page = get_query_var('paged') ? get_query_var('paged') : 1;
 <section class="section-shareholder section-py">
 	<div class="container-fluid">
 		<h2 class="title text-Primary-1 heading-1 font-bold text-center mb-base">
-			<?php _e('Đại hội đồng cổ đông', 'canhcamtheme'); ?></h2>
+			<?php
+				$subtitle = get_field('subtitle', $term);
+				if($subtitle){
+					echo esc_html($subtitle);
+				} else {
+					echo single_term_title('', false);
+				}
+			?>
+		</h2>
 		<div class="wrap-heading flex items-center justify-between mb-base">
 			<ul class="nav-secondary">
-				<li class="active"> <a
-						href="<?php echo get_post_type_archive_link('co-dong'); ?>"><?php _e('Tất cả', 'canhcamtheme'); ?></a>
+				<?php 
+				$pages = get_pages(array(
+					'meta_key' => '_wp_page_template',
+					'meta_value' => 'templates/template_document.php' 
+				));
+				$tailieu_url = ($pages) ? get_permalink($pages[0]->ID) : home_url('/');
+				?>
+
+				<li>
+					<a href="<?php echo esc_url($tailieu_url); ?>">
+						<?php _e('Tất cả', 'canhcamtheme'); ?>
+					</a>
 				</li>
 				<?php
                 $categories = get_terms(array(
-                    'taxonomy' => 'co-dong-category',
+                    'taxonomy' => 'tai-lieu-category',
                     'hide_empty' => false,
-					'orderby' => 'name',
-                	'order' => 'ASC'
                 ));
                 
                 if (!empty($categories) && !is_wp_error($categories)) :
                     foreach ($categories as $category) :
-                        // Check if active (none here, since we are on archive page which is 'All')
-                        $is_active = ''; 
+                        $is_active = ($current_term_id == $category->term_id) ? 'active' : ''; 
                 ?>
 				<li class="<?php echo $is_active; ?>"> <a
 						href="<?php echo get_term_link($category); ?>"><?php echo $category->name; ?></a></li>
@@ -41,14 +57,19 @@ $current_page = get_query_var('paged') ? get_query_var('paged') : 1;
 				<div class="label"><?php _e('Năm', 'canhcamtheme'); ?></div>
 				<div class="select-year">
 					<?php
-                    // Get years from ALL posts
+                    // Get years
                     $years = [];
                     $posts_array = get_posts(array(
-                        'post_type' => 'co-dong',
+                        'post_type' => 'tai-lieu',
                         'posts_per_page' => -1,
+                        'tax_query' => array(
+                            array(
+                                'taxonomy' => 'tai-lieu-category',
+                                'field'    => 'term_id',
+                                'terms'    => $current_term_id,
+                            ),
+                        ),
                         'fields' => 'ids',
-						'order' => 'DESC',
-                        'orderby' => 'date',
                     ));
                     foreach ($posts_array as $pid) {
                         $y = get_the_date('Y', $pid);
@@ -70,11 +91,11 @@ $current_page = get_query_var('paged') ? get_query_var('paged') : 1;
 			</div>
 		</div>
 		<div class="wrapper-table table-responsive mt-5" id="document-table-ajax"
-			data-term-id="<?php echo esc_attr($current_term_id); ?>" data-per-page="10">
+			data-term-id="<?php echo esc_attr($current_term_id); ?>" data-per-page="10" data-post-type="tai-lieu"
+			data-taxonomy="tai-lieu-category">
 			<?php
             if (function_exists('render_document_table_and_pagination')) {
-                // Pass 0 for term_id to indicate "All"
-                echo render_document_table_and_pagination(0, $selected_year, 10, $current_page);
+                echo render_document_table_and_pagination($current_term_id, $selected_year, 10, $current_page, 'tai-lieu', 'tai-lieu-category');
             }
             ?>
 		</div>

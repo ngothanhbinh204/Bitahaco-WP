@@ -43,7 +43,7 @@ function create_co_dong_post_type() {
         'query_var'           => true,
         'rewrite'             => array('slug' => 'co-dong'),
         'capability_type'     => 'post',
-        'has_archive'         => true,
+        'has_archive'         => false,
         'hierarchical'        => false,
         'menu_position'       => null,
         'supports'            => array('title', 'editor', 'thumbnail', 'excerpt'),
@@ -187,3 +187,85 @@ function create_linh_vuc_post_type() {
     register_post_type('linh-vuc', $args);
 }
 add_action('init', 'create_linh_vuc_post_type');
+
+/** 
+ * Register Custom Post Type for Tài liệu
+ */
+function create_tai_lieu_post_type() {
+    $labels = array(
+        'name'                  => __('Tài liệu', 'canhcamtheme'),
+        'singular_name'         => __('Tài liệu', 'canhcamtheme'),
+        'menu_name'             => __('Tài liệu', 'canhcamtheme'),
+        'name_admin_bar'        => __('Tài liệu', 'canhcamtheme'),
+        'archives'              => __('Lưu trữ Tài liệu', 'canhcamtheme'),
+        'attributes'            => __('Thuộc tính Tài liệu', 'canhcamtheme'),
+        'parent_item_colon'     => __('Tài liệu cha:', 'canhcamtheme'),
+        'all_items'             => __('Tất cả Tài liệu', 'canhcamtheme'),
+        'add_new_item'          => __('Thêm Tài liệu mới', 'canhcamtheme'),
+        'add_new'               => __('Thêm mới', 'canhcamtheme'),
+        'new_item'              => __('Tài liệu mới', 'canhcamtheme'),
+        'edit_item'             => __('Sửa Tài liệu', 'canhcamtheme'),
+        'update_item'           => __('Cập nhật Tài liệu', 'canhcamtheme'),
+        'view_item'             => __('Xem Tài liệu', 'canhcamtheme'),
+        'view_items'            => __('Xem các Tài liệu', 'canhcamtheme'),
+        'search_items'          => __('Tìm kiếm Tài liệu', 'canhcamtheme'),
+        'not_found'             => __('Không tìm thấy', 'canhcamtheme'),
+        'not_found_in_trash'    => __('Không tìm thấy trong thùng rác', 'canhcamtheme'),
+        'featured_image'        => __('Ảnh đại diện', 'canhcamtheme'),
+        'set_featured_image'    => __('Đặt ảnh đại diện', 'canhcamtheme'),
+        'remove_featured_image' => __('Xóa ảnh đại diện', 'canhcamtheme'),
+        'use_featured_image'    => __('Sử dụng làm ảnh đại diện', 'canhcamtheme'),
+        'insert_into_item'      => __('Chèn vào Tài liệu', 'canhcamtheme'),
+        'uploaded_to_this_item' => __('Đã tải lên cho Tài liệu này', 'canhcamtheme'),
+        'items_list'            => __('Danh sách Tài liệu', 'canhcamtheme'),
+        'items_list_navigation' => __('Điều hướng danh sách Tài liệu', 'canhcamtheme'),
+        'filter_items_list'     => __('Lọc danh sách Tài liệu', 'canhcamtheme'),
+    );
+    
+    $args = array(
+        'labels'              => $labels,
+        'public'              => true,
+        'publicly_queryable'  => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'query_var'           => true,
+        'rewrite'             => array('slug' => 'tai-lieu'),
+        'capability_type'     => 'post',
+        'has_archive'         => false,
+        'hierarchical'        => false,
+        'menu_position'       => null,
+        'supports'            => array('title', 'editor', 'thumbnail', 'excerpt'),
+        'menu_icon'           => 'dashicons-media-document',
+        'taxonomies'          => array('tai-lieu-category'),
+    );
+
+    register_post_type('tai-lieu', $args);
+    
+    // Register taxonomy for Tài liệu
+    $taxonomy_labels = array(
+        'name'              => __('Danh mục Tài liệu', 'canhcamtheme'),
+        'singular_name'     => __('Danh mục Tài liệu', 'canhcamtheme'),
+        'search_items'      => __('Tìm kiếm Danh mục', 'canhcamtheme'),
+        'all_items'         => __('Tất cả Danh mục', 'canhcamtheme'),
+        'parent_item'       => __('Danh mục cha', 'canhcamtheme'),
+        'parent_item_colon' => __('Danh mục cha:', 'canhcamtheme'),
+        'edit_item'         => __('Sửa Danh mục', 'canhcamtheme'),
+        'update_item'       => __('Cập nhật Danh mục', 'canhcamtheme'),
+        'add_new_item'      => __('Thêm Danh mục mới', 'canhcamtheme'),
+        'new_item_name'     => __('Tên Danh mục mới', 'canhcamtheme'),
+        'menu_name'         => __('Danh mục', 'canhcamtheme'),
+    );
+
+    $taxonomy_args = array(
+        'labels'            => $taxonomy_labels,
+        'hierarchical'      => true,
+        'public'            => true,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array('slug' => 'danh-muc-tai-lieu'),
+    );
+
+    register_taxonomy('tai-lieu-category', array('tai-lieu'), $taxonomy_args);
+}
+add_action('init', 'create_tai_lieu_post_type');

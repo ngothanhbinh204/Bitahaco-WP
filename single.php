@@ -1,8 +1,29 @@
 <?php get_header(); ?>
 
-<div class="space-header pt-[var(--header-height)]"></div>
-
-<?php echo get_template_part('modules/common/banner'); ?>
+<?php
+	$banner = get_field('banner');
+	$banner_url = isset($banner['url']) ? $banner['url'] : '';
+	$banner_title = isset($banner['title']) ? $banner['title'] : '';
+	
+?>
+<section class="section-banner-secondary">
+	<div class="block-banner img-ratio ratio:pt-[1_2] md:ratio:pt-[640_1920]">
+		<?php if($banner): ?>
+		<img class="lozad" data-src="<?php echo esc_url($banner_url); ?>"
+			alt="<?php echo esc_attr($banner_title); ?>" />
+		<?php endif; ?>
+		<div class="content">
+			<div class="container-fluid">
+				<h2 class="title">
+					<?php echo the_title() ?>
+				</h2>
+				<div class="global-breadcrumb">
+					<?php if(function_exists('rank_math_the_breadcrumbs')) rank_math_the_breadcrumbs(); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
 
 <section class="section-detail-news section-py">
 	<div class="container-fluid">

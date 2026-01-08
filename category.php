@@ -13,61 +13,49 @@ $term = get_queried_object();
 				<h1 class="heading-1 text-Primary-1"><?php echo esc_html($term->name); ?></h1>
 				<ul class="nav-news">
 					<?php
-                    add_filter('nav_menu_link_attributes', function($atts, $item, $args) {
-                        if (isset($args->theme_location) && $args->theme_location == 'menu-category') {
-                            $atts['class'] = 'body-1'; 
-                            $term = get_queried_object();
-                            if ($term && isset($term->term_id) && $item->object_id == $term->term_id) {
-                                $atts['class'] .= ' active';
-                            }
-                        }
-                        return $atts;
-                    }, 10, 3);
+					$current_term = get_queried_object();
+					$root_id = $current_term->term_id;
+					
+					// Nếu có cha, tìm về cha cao nhất (Root)
+					if ($current_term->parent) {
+						$ancestors = get_ancestors($current_term->term_id, 'category', 'taxonomy');
+						$root_id = (!empty($ancestors)) ? end($ancestors) : $current_term->parent;
+					}
+					
+					$root_term = get_term($root_id, 'category');
+					// Active nếu đang ở trang cha (Root)
+					$is_root_active = ($current_term->term_id == $root_id) ? 'active' : '';
+					?>
 
-                    add_filter('nav_menu_css_class', function($classes, $item, $args) {
-                        if (isset($args->theme_location) && $args->theme_location == 'menu-category') {
-                            $classes[] = 'nav-news-item';
-                        }
-                        return $classes;
-                    }, 10, 3);
+					<li class="nav-news-item <?php echo $is_root_active; ?>">
+						<a href="<?php echo get_term_link($root_term); ?>"
+							class="body-1 <?php echo $is_root_active; ?>">
+							<?php _e('Tất cả', 'canhcamtheme'); ?>
+						</a>
+					</li>
 
-                    wp_nav_menu(array(
-                        'theme_location'  => 'menu-category',
-                        'container'       => false,
-                        'menu_class'      => false,
-                        'items_wrap'      => '%3$s', // chỉ xuất <li> và <a>, không wrap ul
-                        'fallback_cb'     => false,
-                        'depth'           => 1,
-                        'walker'          => new class extends Walker_Nav_Menu {
-                            public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
-                                $classes = empty($item->classes) ? array() : (array) $item->classes;
-                                $class_names = join(' ', apply_filters('nav_menu_css_class', array_filter($classes), $item, $args));
-                                $class_names = $class_names ? ' class="' . esc_attr($class_names) . '"' : '';
-
-                                $attributes = '';
-                                if (!empty($item->attr_title)) {
-                                    $attributes .= ' title="' . esc_attr($item->attr_title) . '"';
-                                }
-                                if (!empty($item->target)) {
-                                    $attributes .= ' target="' . esc_attr($item->target) . '"';
-                                }
-                                if (!empty($item->xfn)) {
-                                    $attributes .= ' rel="' . esc_attr($item->xfn) . '"';
-                                }
-                                if (!empty($item->url)) {
-                                    $attributes .= ' href="' . esc_attr($item->url) . '"';
-                                }
-
-                                $item_output = '<li>';
-                                $item_output .= '<a' . $attributes . '>';
-                                $item_output .= apply_filters('the_title', $item->title, $item->ID);
-                                $item_output .= '</a>';
-                                $item_output .= '</li>';
-
-                                $output .= $item_output;
-                            }
-                        },
+					<?php
+                    $categories = get_terms(array(
+                        'taxonomy' => 'category',
+                        'hide_empty' => false,
+                        'orderby' => 'name',
+                        'order' => 'ASC',
+						'parent' => $root_id // Lấy danh sách con của Root
                     ));
+                    
+                    if (!empty($categories) && !is_wp_error($categories)) :
+                        foreach ($categories as $category) :
+                            $is_active = ($current_term->term_id == $category->term_id) ? 'active' : ''; 
+                    ?>
+					<li class="nav-news-item <?php echo $is_active; ?>">
+						<a href="<?php echo get_term_link($category); ?>"
+							title="<?php echo esc_attr($category->name); ?>" class="body-1 <?php echo $is_active; ?>">
+							<?php echo $category->name; ?>
+						</a>
+					</li>
+					<?php
+                        endforeach;
+                    endif;
                     ?>
 				</ul>
 			</div>
@@ -163,39 +151,12 @@ $term = get_queried_object();
                 if ($total_pages > 1) : 
                 ?>
 			<ul class="pagination justify-center">
-				<?php 
-                // Previous
-                if ($current_page > 1):
-                    $prev_page = max(1, $current_page - 1);
-                ?>
+				<?php for ($i = 1; $i <= min(3, $total_pages); $i++) : // Chỉ hiển thị tối đa 3 trang như HTML mẫu ?>
 				<li
-					class="pagination-item flex-center w-10 md:w-12 h-10 md:h-12 border-2 border-Primary-2 rounded-1 heading-4 transition-300 hover:bg-Primary-1 hover:border-Primary-1 cursor-pointer">
-					<a href="<?php echo esc_url(get_pagenum_link($prev_page)); ?>" class="flex-center w-full h-full"><i
-							class="fa-regular fa-chevron-left"></i></a>
-				</li>
-				<?php endif; ?>
-
-				<?php for ($i = 1; $i <= $total_pages; $i++) : 
-                    $active = ($i == $current_page) ? 'active' : '';
-                ?>
-				<li
-					class="pagination-item flex-center w-10 md:w-12 h-10 md:h-12 border-2 border-Primary-2 rounded-1 heading-4 transition-300 hover:bg-Primary-1 hover:border-Primary-1 cursor-pointer <?php echo $active; ?>">
-					<a href="<?php echo esc_url(get_pagenum_link($i)); ?>"
-						class="flex-center w-full h-full"><?php echo $i; ?></a>
+					class="pagination-item flex-center w-10 md:w-12 h-10 md:h-12 border-2 border-Primary-2 rounded-1 heading-4 transition-300 hover:bg-Primary-1 hover:border-Primary-1 cursor-pointer <?php echo ($i == $current_page) ? 'active' : ''; ?>">
+					<a href="<?php echo esc_url(get_pagenum_link($i)); ?>"><?php echo $i; ?></a>
 				</li>
 				<?php endfor; ?>
-
-				<?php 
-                 // Next
-                 if ($current_page < $total_pages):
-                    $next_page = min($total_pages, $current_page + 1);
-                ?>
-				<li
-					class="pagination-item flex-center w-10 md:w-12 h-10 md:h-12 border-2 border-Primary-2 rounded-1 heading-4 transition-300 hover:bg-Primary-1 hover:border-Primary-1 cursor-pointer">
-					<a href="<?php echo esc_url(get_pagenum_link($next_page)); ?>" class="flex-center w-full h-full"><i
-							class="fa-regular fa-chevron-right"></i></a>
-				</li>
-				<?php endif; ?>
 			</ul>
 			<?php endif; ?>
 

@@ -21,24 +21,16 @@
             $tableContainer.append('<div class="loader-overlay"><div class="loader"></div></div>');
         }
 
-        // Get term ID from #current-term-id element's data-term-id attribute (primary source)
-        var termId = 0;
-        
-        // Priority 1: Get from #current-term-id data-term-id attribute
-        if ($('#current-term-id').length && $('#current-term-id').data('term-id')) {
-            termId = parseInt($('#current-term-id').data('term-id')) || 0;
+        // Get variables
+        var termId = $tableContainer.data('term-id') !== undefined ? $tableContainer.data('term-id') : 0;
+        // Priority check for #current-term-id if exists (legacy support)
+        if ($('#current-term-id').length && $('#current-term-id').data('term-id') !== undefined) {
+             termId = $('#current-term-id').data('term-id');
         }
         
-        // Validate termId
-        if (!termId || termId <= 0) {
-            console.error('Term ID not found or invalid:', termId);
-            $tableContainer.html('<div class="error-message">Error: Term ID not found. Please refresh the page.</div>');
-            $tableContainer.removeClass('loading');
-            return;
-        }
-                    
-        // Get per_page value from data attribute or use default
-        var perPage = $('#document-table-ajax').data('per-page') || 10;
+        var postType = $tableContainer.data('post-type') || 'co-dong';
+        var taxonomy = $tableContainer.data('taxonomy') || 'co-dong-category';
+        var perPage = $tableContainer.data('per-page') || 10;
 
         // Prepare AJAX request
         $.ajax({
@@ -51,6 +43,8 @@
                 year: currentState.year,
                 paged: currentState.paged,
                 per_page: perPage,
+                post_type: postType,
+                taxonomy: taxonomy,
                 nonce: (typeof ajax_object !== 'undefined') ? ajax_object.nonce : ''
             },
             success: function(response) {

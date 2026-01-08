@@ -63,6 +63,13 @@ function add_field_select_banner()
 					'value' => 'co-dong-category',
 				),
 			),
+			array(
+				array(
+					'param' => 'taxonomy',
+					'operator' => '==',
+					'value' => 'tai-lieu-category',
+				),
+			),
 		),
 	));
 	acf_add_local_field(array(

@@ -1,54 +1,62 @@
-<?php get_header(); ?>
-<?php 
-$term = get_queried_object(); 
-$current_term_id = $term->term_id;
-$selected_year = isset($_GET['d_year']) ? sanitize_text_field($_GET['d_year']) : '';
-$current_page = get_query_var('paged') ? get_query_var('paged') : 1;
-?>
+<?php
+/**
+ * Template Name: Tài liệu
+ */
+get_header(); ?>
 
+<?php // Banner sẽ tự động lấy từ ACF của Page hiện tại ?>
 <?php echo get_template_part('modules/common/banner'); ?>
 
+<?php 
+$current_term_id = 0; // "All"
+$selected_year = isset($_GET['d_year']) ? sanitize_text_field($_GET['d_year']) : '';
+$current_page = get_query_var('paged') ? get_query_var('paged') : (get_query_var('page') ? get_query_var('page') : 1);
+?>
 
 <section class="section-shareholder section-py">
 	<div class="container-fluid">
+		<?php if(get_field('page_heading')): ?>
 		<h2 class="title text-Primary-1 heading-1 font-bold text-center mb-base">
-			<?php
-				$subtitle = get_field('subtitle', $term);
-				if($subtitle){
-					echo esc_html($subtitle);
+			<?php echo get_field('page_heading'); ?>
+		</h2>
+		<?php else: ?>
+		<h2 class="title text-Primary-1 heading-1 font-bold text-center mb-base">
+			<?php 
+				$title_custom = get_field('title_custom');
+				if($title_custom){
+					echo $title_custom;
 				} else {
-					echo single_term_title('', false);
+					the_title();
 				}
 			?>
-
 		</h2>
+		<?php endif; ?>
+
+		<?php if(get_the_content()): ?>
+		<div class="page-intro text-center mb-base max-w-4xl mx-auto body-1">
+			<?php the_content(); ?>
+		</div>
+		<?php endif; ?>
+
 		<div class="wrap-heading flex items-center justify-between mb-base">
 			<ul class="nav-secondary">
-				<?php 
-				$pages = get_pages(array(
-					'meta_key' => '_wp_page_template',
-					'meta_value' => 'templates/template_shareholder.php' 
-				));
-				$shareholder_url = ($pages) ? get_permalink($pages[0]->ID) : home_url('/');
-				?>
-
-				<li>
-					<a href="<?php echo esc_url($shareholder_url); ?>">
-						<?php _e('Tất cả', 'canhcamtheme'); ?>
-					</a>
+				<li class="active">
+					<a href="<?php the_permalink(); ?>"><?php _e('Tất cả', 'canhcamtheme'); ?></a>
 				</li>
 				<?php
                 $categories = get_terms(array(
-                    'taxonomy' => 'co-dong-category',
+                    'taxonomy' => 'tai-lieu-category',
                     'hide_empty' => false,
+					'orderby' => 'name',
+                	'order' => 'ASC'
                 ));
                 
                 if (!empty($categories) && !is_wp_error($categories)) :
                     foreach ($categories as $category) :
-                        $is_active = ($current_term_id == $category->term_id) ? 'active' : ''; 
                 ?>
-				<li class="<?php echo $is_active; ?>"> <a
-						href="<?php echo get_term_link($category); ?>"><?php echo $category->name; ?></a></li>
+				<li>
+					<a href="<?php echo get_term_link($category); ?>"><?php echo $category->name; ?></a>
+				</li>
 				<?php
                     endforeach;
                 endif;
@@ -58,19 +66,14 @@ $current_page = get_query_var('paged') ? get_query_var('paged') : 1;
 				<div class="label"><?php _e('Năm', 'canhcamtheme'); ?></div>
 				<div class="select-year">
 					<?php
-                    // Get years
+                    // Get years from ALL posts
                     $years = [];
                     $posts_array = get_posts(array(
-                        'post_type' => 'co-dong',
+                        'post_type' => 'tai-lieu',
                         'posts_per_page' => -1,
-                        'tax_query' => array(
-                            array(
-                                'taxonomy' => 'co-dong-category',
-                                'field'    => 'term_id',
-                                'terms'    => $current_term_id,
-                            ),
-                        ),
                         'fields' => 'ids',
+						'order' => 'DESC',
+                        'orderby' => 'date',
                     ));
                     foreach ($posts_array as $pid) {
                         $y = get_the_date('Y', $pid);
@@ -92,10 +95,11 @@ $current_page = get_query_var('paged') ? get_query_var('paged') : 1;
 			</div>
 		</div>
 		<div class="wrapper-table table-responsive mt-5" id="document-table-ajax"
-			data-term-id="<?php echo esc_attr($current_term_id); ?>" data-per-page="10">
+			data-term-id="<?php echo esc_attr($current_term_id); ?>" data-per-page="10" data-post-type="tai-lieu"
+			data-taxonomy="tai-lieu-category">
 			<?php
             if (function_exists('render_document_table_and_pagination')) {
-                echo render_document_table_and_pagination($current_term_id, $selected_year, 10, $current_page);
+                echo render_document_table_and_pagination(0, $selected_year, 10, $current_page, 'tai-lieu', 'tai-lieu-category');
             }
             ?>
 		</div>

@@ -16,14 +16,15 @@ get_header();
 					<?php foreach ($banner_slides as $slide): 
                                 $image = $slide['banner_image'];
                                 $title = $slide['banner_title'];
+								$title_attr = wp_strip_all_tags($title);
                                 if (!$image) continue;
                             ?>
 					<div class="swiper-slide">
 						<div class="home-1-banner relative">
 							<a class="img-ratio ratio:pt-[896_1920]" href="#"
-								title="<?php echo wp_kses_post($title); ?>">
+								title="<?php echo esc_html( $title_attr ); ?>">
 								<img class="lozad" data-src="<?php echo esc_url($image['url']); ?>"
-									alt="<?php echo wp_kses_post($image['alt']); ?>" />
+									alt="<?php echo esc_html($image['alt']); ?>" />
 							</a>
 							<div class="home-1-content">
 								<div class="container">

@@ -25,13 +25,14 @@ add_action('wp_enqueue_scripts', function() {
 		]);
 	}
 
-	// Taxonomy co-dong-category page scripts
-	if (is_tax('co-dong-category')) {
+	// Taxonomy co-dong-category and tai-lieu-category page scripts
+	if (is_tax('co-dong-category') || is_tax('tai-lieu-category') || is_post_type_archive('co-dong') || is_post_type_archive('tai-lieu')) {
 		$term = get_queried_object();
+		$term_id = (isset($term->term_id)) ? $term->term_id : 0;
 		wp_enqueue_script('document-ajax', get_template_directory_uri() . '/scripts/document-ajax.js', ['jquery'], GENERATE_VERSION, true);
 		wp_localize_script('document-ajax', 'ajax_object', [
 			'ajax_url' => $ajax_url,
-			'term_id'  => $term ? $term->term_id : 0,
+			'term_id'  => $term_id,
 			'nonce'    => wp_create_nonce('document_filter_nonce'),
 		]);
 	}
@@ -42,8 +43,8 @@ add_action('wp_enqueue_scripts', function() {
  */
 add_action('pre_get_posts', function($query) {
 	if (!is_admin() && $query->is_main_query()) {
-		// Cổ đông: 10 items (to match render_document_table_and_pagination hardcoded limit)
-		if (is_post_type_archive('co-dong') || is_tax('co-dong-category')) {
+		// Cổ đông & Tài liệu: 10 items (to match render_document_table_and_pagination hardcoded limit)
+		if (is_post_type_archive('co-dong') || is_tax('co-dong-category') || is_post_type_archive('tai-lieu') || is_tax('tai-lieu-category')) {
 			$query->set('posts_per_page', 10);
 		}
 	}
@@ -136,15 +137,17 @@ document.addEventListener('DOMContentLoaded', function() {
  * @param string $selected_year Selected year for filtering
  * @param int $per_page Number of items per page
  * @param int $current_page Current page number
+ * @param string $post_type     Post type slug (default: 'co-dong')
+ * @param string $taxonomy      Taxonomy slug (default: 'co-dong-category')
  * @return string HTML output
  */
-function render_document_table_and_pagination($term_id, $selected_year, $per_page, $current_page) {
+function render_document_table_and_pagination($term_id, $selected_year, $per_page, $current_page, $post_type = 'co-dong', $taxonomy = 'co-dong-category') {
 	// Determine whether to allow empty term_id (for "All")
 	$is_all = ($term_id === 0 || $term_id === '0' || $term_id === false || $term_id === null);
 
 	// If not "All", validate term
 	if (!$is_all) {
-		$term = get_term($term_id, 'co-dong-category');
+		$term = get_term($term_id, $taxonomy);
 		if (is_wp_error($term) || !$term) {
 			 ob_start();
 			?>
@@ -171,7 +174,7 @@ function render_document_table_and_pagination($term_id, $selected_year, $per_pag
 	
 	// Query posts
 	$args = array(
-		'post_type' => 'co-dong',
+		'post_type' => $post_type,
 		'posts_per_page' => -1, // Get all posts first to filter by year
 		'post_status' => 'publish',
 		'orderby' => 'date',
@@ -182,7 +185,7 @@ function render_document_table_and_pagination($term_id, $selected_year, $per_pag
 	if (!$is_all) {
 		$args['tax_query'] = array(
 			array(
-				'taxonomy' => 'co-dong-category',
+				'taxonomy' => $taxonomy,
 				'field' => 'term_id',
 				'terms' => $term_id,
 				'operator' => 'IN', 
@@ -222,7 +225,7 @@ function render_document_table_and_pagination($term_id, $selected_year, $per_pag
 		$paged_query = new WP_Query(array('post__in' => array(0))); // Query with non-existent ID to return empty
 	} else {
 		$paged_args = array(
-			'post_type' => 'co-dong',
+			'post_type' => $post_type,
 			'post__in' => $paged_post_ids,
 			'posts_per_page' => $per_page,
 			'post_status' => 'publish',
@@ -251,7 +254,7 @@ function render_document_table_and_pagination($term_id, $selected_year, $per_pag
 		<?php 
 			$index = 0;
 			while ($paged_query->have_posts()) : 
-				$paged_query->the_post();
+                $paged_query->the_post();
 				$post_id = get_the_ID();
 				$file = get_field('file', $post_id); // Get file field from ACF
 				$post_date = get_the_date('d/m/Y');
@@ -374,18 +377,41 @@ function ajax_filter_documents() {
 	$term_id = isset($_REQUEST['term_id']) ? intval($_REQUEST['term_id']) : 0;
 	$selected_year = isset($_REQUEST['year']) ? sanitize_text_field($_REQUEST['year']) : '';
 	$current_page = isset($_REQUEST['paged']) ? max(1, intval($_REQUEST['paged'])) : 1;
+    $post_type = isset($_REQUEST['post_type']) ? sanitize_text_field($_REQUEST['post_type']) : 'co-dong';
+    $taxonomy = isset($_REQUEST['taxonomy']) ? sanitize_text_field($_REQUEST['taxonomy']) : 'co-dong-category';
 	
 	// Get per_page from AJAX request or use constant if available
 	$per_page = isset($_REQUEST['per_page']) ? intval($_REQUEST['per_page']) : 10;
 	
-	if (!$term_id) {
+	// Note: We used to check if (!$term_id) wp_die(), but term_id can be 0 (All). 
+    // The previous code had a bug or 'All' passes 0 and the check was incorrect?
+    // Actually render_document_table_and_pagination allows term_id = 0.
+    // The previous code block:
+    /* 
+    if (!$term_id) {
 		echo '<div class="error-message">Invalid term ID</div>';
 		wp_die();
-	}
+	} 
+    */
+    // If term_id is 0 ("All"), this condition is true and it dies. 
+    // BUT archive-co-dong.php passes term_id=0.
+    // So if the archives worked, term_id must have been something else or the check logic was simpler.
+    // Wait, the previous code checks (!$term_id) and echos 'Invalid term ID'. 
+    // If I'm on archive page, term_id is 0. 
+    // Let's look at archive-co-dong.php. It says data-term-id="0".
+    // If AJAX sends 0, query is failed?
+    // Let me RE-READ the old render_document_table_and_pagination code carefully.
+    // "if (!$term_id) { echo '...'; wp_die(); }" WAS there.
+    // How did it work for "All"? Maybe "All" isn't using AJAX? Or maybe term_id 0 was NOT sent?
+    // JS side must be sending something.
+    // Ah, wait. `archive-co-dong.php` uses `render_document_table_and_pagination(0, ...)` directly on load.
+    // When AJAX fires (filter or pagination), does it send 0?
+    // If strict processing, yes.
+    // I will remove the strict `if (!$term_id)` check or make it allow 0 because the render function allows it.
 	
 	// Render the table and pagination
 	if (function_exists('render_document_table_and_pagination')) {
-		echo render_document_table_and_pagination($term_id, $selected_year, $per_page, $current_page);
+		echo render_document_table_and_pagination($term_id, $selected_year, $per_page, $current_page, $post_type, $taxonomy);
 	} else {
 		echo '<div class="error-message">Error: Document rendering function not available.</div>';
 	}
