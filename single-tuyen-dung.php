@@ -142,8 +142,9 @@
 							<?php endif; ?>
 							<?php endif; ?>
 						</ul>
-						<button class="btn w-full px-6 py-3.5 mt-3 text-body-1 text-Primary-2 bg-white "
-							id="apply-now-btn"><?php _e('Ứng tuyển ngay', 'canhcamtheme'); ?></button>
+						<a href="#form-requirement" data-fancybox data-src="#form-requirement"
+							class="btn w-full px-6 py-3.5 mt-3 text-body-1 text-Primary-2 bg-white "
+							id="apply-now-btn"><?php _e('Ứng tuyển ngay', 'canhcamtheme'); ?></a>
 
 
 					</div>
@@ -192,7 +193,7 @@
 		</div>
 	</div>
 </section>
-<div class="fixed z-[1001] w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" id="popup-applyNow">
+<!-- <div class="fixed z-[1001] w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" id="popup-applyNow">
 	<div class="container-1600 relative">
 		<div
 			class="wrap-popup-applyNow absolute-center w-[calc(100%-30px)] md:w-[calc(1026/1600*100%)] flex flex-col gap-y-4 p-5 -md:pt-7 md:p-10 bg-white mx-auto">
@@ -209,6 +210,18 @@
             endif; ?>
 		</div>
 	</div>
+</div> -->
+
+<div id="form-requirement" style="display: none;" data-fancybox-modal>
+
+	<div class="wrap-popup-applyNow popup-content w-full relative z-50">
+		<h3 class="title-job text-5xl text-Neutral-Black font-light mb-10"><?php echo get_the_title(); ?></h3>
+		<?php $job_title = get_the_title(); 
+        echo do_shortcode($form); ?>
+	</div>
+
 </div>
+
+
 
 <?php get_footer(); ?>

@@ -507,55 +507,76 @@ get_header();
 
 	<?php if (get_field('home_field_operation_enable')): ?>
 	<?php
-        $field_title = get_field('home_field_operation_title');
-        $field_desc = get_field('home_field_operation_description');
-        $field_items = get_field('home_field_operation_items');
-        ?>
+    $section_title = get_field('home_field_operation_title');
+    $section_desc  = get_field('home_field_operation_description');
+    $related_posts = get_field('home_field_operation_items');
+?>
 	<section class="section-field-op py-10">
 		<div class="container-fluid">
 			<div class="field-op">
 				<div class="wrap-heading rem:max-w-[1000px] w-full mx-auto text-center mb-base">
-					<?php if ($field_title): ?>
+					<?php if ($section_title): ?>
 					<h2 class="title heading-1 text-Primary-1 font-bold mb-4" data-aos="fade-up" data-aos-delay="100"
-						data-aos-duration="1000"><?php echo esc_html($field_title); ?></h2>
+						data-aos-duration="1000">
+						<?php echo esc_html($section_title); ?>
+					</h2>
 					<?php endif; ?>
-					<?php if ($field_desc): ?>
+
+					<?php if ($section_desc): ?>
 					<div class="desc body-1 font-normal" data-aos="fade-up" data-aos-delay="200"
 						data-aos-duration="1000">
-						<p><?php echo esc_html($field_desc); ?></p>
+						<p><?php echo esc_html($section_desc); ?></p>
 					</div>
 					<?php endif; ?>
 				</div>
-				<?php if ($field_items): ?>
+
+				<?php if ($related_posts && is_array($related_posts)): ?>
 				<div class="swiper swiper-field-op" data-aos="zoom-in" data-aos-delay="300" data-aos-duration="1000">
 					<ul class="swiper-wrapper field-op-list">
-						<?php foreach ($field_items as $item): 
-                                $bg_img = $item['field_image'];
-                                $title = $item['field_title'];
-                                $desc = $item['field_description'];
-                                $link = $item['link'];
-                            ?>
+						<?php foreach ($related_posts as $post): 
+                        setup_postdata($post);
+
+                        $bg_img_url = get_the_post_thumbnail_url($post, 'full') ?: '';
+                        $title      = get_the_title($post);
+						$desc = $post->post_excerpt;
+						if (empty($desc)) {
+						$desc = wp_trim_words(get_the_content(null, false, $post), 999, '...');
+						}
+						$expert_custom = get_field('service_intro_text', $post->ID);
+						if ($expert_custom) {
+							$desc = $expert_custom;
+						}
+                        $link       = get_permalink($post); 
+                    ?>
 						<li
 							class="swiper-slide field-op-item relative xl:flex-1 rem:!h-[480px] overflow-hidden group transition-500">
+							<?php if ($bg_img_url): ?>
 							<div class="thumb img-full w-full h-full">
-								<img class="lozad" data-src="<?php echo esc_url($bg_img['url']); ?>"
+								<img class="lozad" data-src="<?php echo esc_url($bg_img_url); ?>"
 									alt="<?php echo esc_attr($title); ?>" />
 							</div>
+							<?php endif; ?>
+
 							<div
 								class="wrap-content-top absolute top-0 left-0 p-8 w-full flex items-center justify-between gap-4">
 								<h3 class="title heading-3 font-bold transition-all-500-linear text-white">
-									<?php echo esc_html($title); ?></h3>
-								<a class="icon" href="<?php echo $link ? esc_url($link['url']) : '#'; ?>"
-									target="<?php echo $link ? esc_attr($link['target']) : ''; ?>"> </a>
+									<?php echo esc_html($title); ?>
+								</h3>
+								<a class="icon" href="<?php echo esc_url($link); ?>"
+									aria-label="Xem chi tiết <?php echo esc_attr($title); ?>"></a>
 							</div>
+
+							<?php if ($desc): ?>
 							<div
 								class="info absolute bottom-0 left-0 z-2 w-full p-7 text-white transition-all-500-linear">
 								<div class="content body-1 mt-2.25 xl:opacity-0 xl:invisible transition-all-500-linear">
-									<p><?php echo wp_kses_post( $desc ); ?></p>
+									<p><?php echo wp_kses_post($desc); ?></p>
 								</div>
 							</div>
+							<?php endif; ?>
 						</li>
-						<?php endforeach; ?>
+						<?php endforeach; 
+                    wp_reset_postdata();?>
 					</ul>
 				</div>
 				<?php endif; ?>

@@ -44,10 +44,18 @@
                         $header_phone = get_field('header_phone', 'option');
                         if($header_phone):
                         ?>
-						<div class="header-phone">
+						<div class="header-phone flex items-center gap-2">
+							<i class="rem:text-[18px] font-normal fa-regular fa-phone-volume"></i>
 							<?php echo $header_phone; ?>
 						</div>
 						<?php endif; ?>
+
+						<!-- <div class="header-phone">
+							<a class="flex items-center gap-3" href="#">
+								<i class="rem:text-[18px] font-normal fa-regular fa-phone-volume"></i>
+								<span class="heading-5 font-semibold">(+84) 979 583 779</span>
+							</a>
+						</div> -->
 					</div>
 
 					<div class="header-language flex items-center gap-3">
@@ -66,11 +74,11 @@
                                     // We can try to map based on language code
                                     if($l['language_code'] == 'vi') {
                                          $flag_vn = get_field('header_language_vn', 'option');
-                                         $img_src = $flag_vn ? $flag_vn['url'] : get_template_directory_uri() . '/UI/img/VN.svg';
+                                         $img_src = $flag_vn ? $flag_vn['url'] : get_template_directory_uri() . '/img/VN.svg';
                                          echo '<div class="icon-vn w-6"><a class="img-ratio" href="'.$l['url'].'"><img src="'.$img_src.'" alt="'.$l['native_name'].'"></a></div>';
                                     } elseif($l['language_code'] == 'en') {
                                          $flag_en = get_field('header_language_en', 'option');
-                                         $img_src = $flag_en ? $flag_en['url'] : get_template_directory_uri() . '/UI/img/EN.svg';
+                                         $img_src = $flag_en ? $flag_en['url'] : get_template_directory_uri() . '/img/EN.svg';
                                          echo '<div class="icon-en w-6"><a class="img-ratio" href="'.$l['url'].'"><img src="'.$img_src.'" alt="'.$l['native_name'].'"></a></div>';
                                     }
                                 }
@@ -81,10 +89,10 @@
                             $flag_en = get_field('header_language_en', 'option');
                              ?>
 						<div class="icon-vn w-6"><a class="img-ratio " href="#"><img
-									src="<?php echo $flag_vn ? $flag_vn['url'] : get_template_directory_uri() . '/UI/img/VN.svg'; ?>"
+									src="<?php echo $flag_vn ? $flag_vn['url'] : get_template_directory_uri() . '/img/VN.svg'; ?>"
 									alt=""></a></div>
 						<div class="icon-en w-6"><a class="img-ratio " href="#"><img
-									src="<?php echo $flag_en ? $flag_en['url'] : get_template_directory_uri() . '/UI/img/EN.svg'; ?>"
+									src="<?php echo $flag_en ? $flag_en['url'] : get_template_directory_uri() . '/img/EN.svg'; ?>"
 									alt=""></a></div>
 						<?php } ?>
 					</div>
@@ -94,7 +102,7 @@
                     ?>
 					<div class="header-search sq-6 flex-center">
 						<img class="w-full h-full object-contain"
-							src="<?php echo $search_icon ? $search_icon['url'] : get_template_directory_uri() . '/UI/img/icon-search.svg'; ?>"
+							src="<?php echo $search_icon ? $search_icon['url'] : get_template_directory_uri() . '/img/icon-search.svg'; ?>"
 							alt="">
 					</div>
 				</div>
@@ -179,11 +187,11 @@
                                  foreach($languages as $l){
                                      if($l['language_code'] == 'vi') {
                                          $flag_vn = get_field('header_language_vn', 'option');
-                                         $img_src = $flag_vn ? $flag_vn['url'] : get_template_directory_uri() . '/UI/img/VN.svg';
+                                         $img_src = $flag_vn ? $flag_vn['url'] : get_template_directory_uri() . '/img/VN.svg';
                                          echo '<div class="icon-vn w-6"><a class="img-ratio" href="'.$l['url'].'"><img src="'.$img_src.'" alt="'.$l['native_name'].'"></a></div>';
                                      } elseif($l['language_code'] == 'en') {
                                          $flag_en = get_field('header_language_en', 'option');
-                                         $img_src = $flag_en ? $flag_en['url'] : get_template_directory_uri() . '/UI/img/EN.svg';
+                                         $img_src = $flag_en ? $flag_en['url'] : get_template_directory_uri() . '/img/EN.svg';
                                          echo '<div class="icon-en w-6"><a class="img-ratio" href="'.$l['url'].'"><img src="'.$img_src.'" alt="'.$l['native_name'].'"></a></div>';
                                      }
                                  }
@@ -193,16 +201,16 @@
                             $flag_en = get_field('header_language_en', 'option');
                         ?>
 						<div class="icon-vn w-6"><a class="img-ratio " href="#"><img
-									src="<?php echo $flag_vn ? $flag_vn['url'] : get_template_directory_uri() . '/UI/img/VN.svg'; ?>"
+									src="<?php echo $flag_vn ? $flag_vn['url'] : get_template_directory_uri() . '/img/VN.svg'; ?>"
 									alt=""></a></div>
 						<div class="icon-en w-6"><a class="img-ratio " href="#"><img
-									src="<?php echo $flag_en ? $flag_en['url'] : get_template_directory_uri() . '/UI/img/EN.svg'; ?>"
+									src="<?php echo $flag_en ? $flag_en['url'] : get_template_directory_uri() . '/img/EN.svg'; ?>"
 									alt=""></a></div>
 						<?php } ?>
 					</div>
 					<div class="header-search">
 						<img class="w-full h-full object-contain"
-							src="<?php echo $search_icon ? $search_icon['url'] : get_template_directory_uri() . '/UI/img/icon-search.svg'; ?>"
+							src="<?php echo $search_icon ? $search_icon['url'] : get_template_directory_uri() . '/img/icon-search.svg'; ?>"
 							alt="">
 					</div>
 					<div class="header-bar">

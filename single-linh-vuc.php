@@ -79,7 +79,7 @@
                     $t_content = $tab['tab_content'];
                     $t_img = $tab['tab_image'];
                     $t_sub_heading = $tab['tab_sub_heading'];
-                    $t_list = $tab['tab_item_list'];
+					$sub_content = $tab['tab_sub_content'];
                 ?>
 				<div class="tabslet-content <?php echo $index === 0 ? 'active' : ''; ?>"
 					id="tab-service-<?php echo $index; ?>">
@@ -109,17 +109,9 @@
 							<div class="title heading-40 font-light mb-base"><?php echo esc_html($t_sub_heading); ?>
 							</div>
 							<?php endif; ?>
-							<?php if($t_list): ?>
-							<div class="lists flex flex-col gap-3">
-								<?php foreach($t_list as $item): ?>
-								<div class="item flex gap-5">
-									<div class="icon">
-										<i class="fa-solid fa-square-check text-Primary-1"></i>
-									</div>
-									<div class="title body-1 font-normal"><?php echo esc_html($item['item_text']); ?>
-									</div>
-								</div>
-								<?php endforeach; ?>
+							<?php if($sub_content): ?>
+							<div class="sub_content flex flex-col gap-3">
+								<?php echo wp_kses_post(wpautop($sub_content)); ?>
 							</div>
 							<?php endif; ?>
 						</div>

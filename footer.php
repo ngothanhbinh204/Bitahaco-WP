@@ -11,6 +11,8 @@ $contact_title = get_field('footer_contact_title', 'option');
 $contact_info = get_field('footer_contact_info', 'option');
 $business_license = get_field('footer_business_license', 'option');
 
+$link_contact = get_field('footer_contact_link', 'option');
+
 // Column 2
 $col2_title = get_field('footer_col2_title', 'option');
 $phones = get_field('footer_phones', 'option');
@@ -84,9 +86,13 @@ $policy_links = get_field('footer_policy_links', 'option');
 							<div class="label"><?php echo $info['label']; ?></div>
 							<?php endif; ?>
 
-							<?php if ($info['link']): ?>
-							<a class="font-bold" href="<?php echo esc_url($info['link']); ?>">
-								<?php echo $info['value']; ?>
+							<?php if ($info['link_contact']): ?>
+							<?php
+									$link_contact_url = $info['link_contact']['url'];
+									$link_contact_label = $info['link_contact']['title'];	
+								?>
+							<a class="font-bold" href="<?php echo esc_url($link_contact_url); ?>">
+								<?php echo esc_html($link_contact_label); ?>
 							</a>
 							<?php else: ?>
 							<span class="font-bold"><?php echo $info['value']; ?></span>
@@ -189,18 +195,16 @@ $policy_links = get_field('footer_policy_links', 'option');
 
 			<?php if ($policy_links): ?>
 			<div class="footer-policy">
-				<ul>
-					<?php foreach ($policy_links as $policy): ?>
-					<?php if ($policy['link']): ?>
-					<li>
-						<a href="<?php echo esc_url($policy['link']['url']); ?>"
-							target="<?php echo esc_attr($policy['link']['target'] ?: '_self'); ?>">
-							<?php echo $policy['link']['title']; ?>
-						</a>
-					</li>
-					<?php endif; ?>
-					<?php endforeach; ?>
-				</ul>
+				<!-- get menu by menu-policy location -->
+				<?php
+				wp_nav_menu(array(
+					'theme_location' => 'menu-policy',
+					'container'      => false,
+					'menu_class'     => '',
+					'fallback_cb'    => false,
+					'depth'          => 1
+				));
+				?>
 			</div>
 			<?php endif; ?>
 		</div>
@@ -232,11 +236,17 @@ if (!$footer_fixed_cta) {
 		title="<?php echo esc_attr($link['title']); ?>" <?php endif; ?>>
 		<div class="btn-icon">
 			<div class="icon">
-				<?php if(strpos($icon, 'facebook') !== false) : ?>
-				<i class="fa-brands fa-<?php echo $icon; ?>"></i>
-				<?php else : ?>
-				<i class="fa-solid fa-<?php echo $icon; ?>"></i>
-				<?php endif; ?>
+				<?php 
+					$brands = ['facebook', 'twitter', 'instagram', 'youtube', 'linkedin', 'google', 'pinterest', 'tiktok', 'snapchat', 'reddit', 'tumblr', 'whatsapp', 'telegram'];
+					$is_brand = false;
+					foreach ($brands as $brand) {
+						if (strpos($icon, $brand) !== false) {
+							$is_brand = true;
+							break;
+						}
+					}
+					?>
+				<i class="fa<?php echo $is_brand ? '-brands' : '-solid'; ?> fa-<?php echo $icon; ?>"></i>
 			</div>
 		</div>
 	</a>
