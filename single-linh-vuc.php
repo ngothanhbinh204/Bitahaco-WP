@@ -16,7 +16,8 @@
 			<div class="wrapper flex items-center lg:flex-row flex-col">
 				<div class="col-left flex flex-col justify-center lg:rem:max-w-[640px] w-full py-10">
 					<h2 class="title heading-1 text-Primary-1 font-bold pb-5">
-						<?php echo get_post_type_object(get_post_type())->labels->singular_name; ?></h2>
+						<?php _e("Lĩnh vực hoạt động", "canhcamtheme") ?>
+					</h2>
 					<div class="line w-15 rem:h-[2px] bg-Primary-1 mb-5"></div>
 					<div class="sub-title heading-2 font-normal mb-5"><?php the_title(); ?></div>
 					<?php if($intro_text): ?>

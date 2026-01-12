@@ -1,9 +1,11 @@
 jQuery(document).ready(function($) {
     // Add CSS for loading state
     $('<style>.loading { position: relative; opacity: 0.6; }.loading:after { content: ""; position: absolute; top: 50%; left: 50%; width: 30px; height: 30px; margin: -15px 0 0 -15px; border: 3px solid rgba(0,0,0,0.1); border-top-color: #333; border-radius: 50%; animation: spin 0.6s linear infinite; } @keyframes spin { to { transform: rotate(360deg); } }</style>').appendTo('head');
-    var currentPage = 1;
+    
+    // Get initial page from data attribute or default to 1
+    var currentPage = parseInt($('#career-list').data('current-page')) || 1;
     var loading = false;
-    var currentCount = $('#career-list tr').length || 0;
+    var currentCount = $('#career-list tr').length || 0; // Usage for counting might be legacy, better to rely on page math
     var perPage = parseInt($('#career-list').data('per-page')) || 4;
     
     // Year filter AJAX functionality

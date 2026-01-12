@@ -45,7 +45,8 @@
                         if($header_phone):
                         ?>
 						<div class="header-phone flex items-center gap-2">
-							<i class="rem:text-[18px] font-normal fa-regular fa-phone-volume"></i>
+							<!-- <i class="rem:text-[18px] font-normal fa-regular fa-phone-volume"></i> -->
+							<img src="<?php echo get_template_directory_uri() . '/img/phone.png'; ?>" alt="Phone">
 							<?php echo $header_phone; ?>
 						</div>
 						<?php endif; ?>
@@ -177,36 +178,52 @@
                         }
                         ?>
 					</div>
-					<div class="header-language">
+					<div class="header-language flex items-center gap-3">
 						<?php
-                        // Mobile/Tablet View Language (Duplicate logic or just simplified)
-                        if (function_exists('icl_get_languages')) {
-                             // Same loop logic or reuse
-                             $languages = icl_get_languages('skip_missing=0');
-                             if(!empty($languages)){
-                                 foreach($languages as $l){
-                                     if($l['language_code'] == 'vi') {
-                                         $flag_vn = get_field('header_language_vn', 'option');
-                                         $img_src = $flag_vn ? $flag_vn['url'] : get_template_directory_uri() . '/img/VN.svg';
-                                         echo '<div class="icon-vn w-6"><a class="img-ratio" href="'.$l['url'].'"><img src="'.$img_src.'" alt="'.$l['native_name'].'"></a></div>';
-                                     } elseif($l['language_code'] == 'en') {
-                                         $flag_en = get_field('header_language_en', 'option');
-                                         $img_src = $flag_en ? $flag_en['url'] : get_template_directory_uri() . '/img/EN.svg';
-                                         echo '<div class="icon-en w-6"><a class="img-ratio" href="'.$l['url'].'"><img src="'.$img_src.'" alt="'.$l['native_name'].'"></a></div>';
-                                     }
-                                 }
-                             }
-                        } else {
-                            $flag_vn = get_field('header_language_vn', 'option');
-                            $flag_en = get_field('header_language_en', 'option');
-                        ?>
-						<div class="icon-vn w-6"><a class="img-ratio " href="#"><img
-									src="<?php echo $flag_vn ? $flag_vn['url'] : get_template_directory_uri() . '/img/VN.svg'; ?>"
-									alt=""></a></div>
-						<div class="icon-en w-6"><a class="img-ratio " href="#"><img
-									src="<?php echo $flag_en ? $flag_en['url'] : get_template_directory_uri() . '/img/EN.svg'; ?>"
-									alt=""></a></div>
-						<?php } ?>
+    if (function_exists('icl_get_languages')) {
+        $languages = icl_get_languages('skip_missing=0&orderby=id&order=asc');
+        
+        if (!empty($languages)) {
+            foreach ($languages as $lang) {
+                $code = $lang['language_code'];
+                $is_active = $lang['active'];
+                
+                // Lấy field ACF tùy chọn cho từng ngôn ngữ (nếu có)
+                $flag_field = get_field("header_language_{$code}", 'option');
+                $flag_url = $flag_field ? $flag_field['url'] : '';
+                
+                // Fallback theo code ngôn ngữ
+                if (!$flag_url) {
+                    $flag_url = get_template_directory_uri() . "/img/" . strtoupper($code) . ".svg";
+                }
+
+                $class = $is_active ? 'active opacity-100' : 'opacity-60 hover:opacity-100 transition';
+                ?>
+						<div class="lang-item w-6 <?php echo $class; ?>">
+							<a href="<?php echo esc_url($lang['url']); ?>"
+								title="<?php echo esc_attr($lang['native_name']); ?>">
+								<img src="<?php echo esc_url($flag_url); ?>"
+									alt="<?php echo esc_attr($lang['native_name']); ?>" class="w-full h-auto">
+							</a>
+						</div>
+						<?php
+            }
+        }
+    } else {
+        // Fallback khi KHÔNG có WPML: chỉ hiển thị ngôn ngữ mặc định + link trang chủ
+        $default_lang = 'vi'; // hoặc lấy từ get_locale()
+        $flag_vn = get_field('header_language_vn', 'option');
+        ?>
+						<div class="lang-item w-6 active">
+							<a href="<?php echo home_url(); ?>">
+								<img src="<?php echo $flag_vn ? esc_url($flag_vn['url']) : get_template_directory_uri() . '/img/VN.svg'; ?>"
+									alt="Tiếng Việt">
+							</a>
+						</div>
+						<?php
+        // Có thể thêm các ngôn ngữ khác thủ công nếu cần
+    }
+    ?>
 					</div>
 					<div class="header-search">
 						<img class="w-full h-full object-contain"

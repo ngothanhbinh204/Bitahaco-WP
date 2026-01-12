@@ -98,7 +98,7 @@ $id_section_award = get_field('id_section_award') ?: '';
 							<?php if($s_icon): ?><img class="img-svg" src="<?php echo esc_url($s_icon['url']); ?>"
 								alt="" /><?php endif; ?>
 						</div>
-						<div class="count-statistical flex heading-banner text-Primary-3 font-bold tabular-nums">
+						<div class="count-statistical flex heading-banner text-Primary-3 font-bold">
 							<span class="countup"
 								data-number="<?php echo esc_attr($stat['stat_number']); ?>"></span><span><?php echo esc_html($stat['stat_suffix']); ?></span>
 						</div>
@@ -167,7 +167,7 @@ $id_section_award = get_field('id_section_award') ?: '';
                             ?>
 							<li class="swiper-slide history-item">
 								<div
-									class="child grid md:grid-cols-[41.21%_1fr] grid-cols-1 items-center rounded-6 overflow-hidden p-4 md:p-0">
+									class="child grid md:grid-cols-[38.889%_1fr] grid-cols-1 items-center rounded-6 overflow-hidden p-4 md:p-0">
 									<div class="img-thumb img-ratio">
 										<?php if($h_img): ?><img class="lozad"
 											data-src="<?php echo esc_url($h_img['url']); ?>" alt="" /><?php endif; ?>
@@ -256,10 +256,10 @@ $id_section_award = get_field('id_section_award') ?: '';
 								</div>
 								<div class="content pt-6 text-center">
 									<div class="title-wrapper">
-										<div class="title heading-3 font-bold text-Primary-1">
+										<div class="title uppercase heading-3 font-bold text-Primary-1">
 											<?php echo esc_html($member['member_name']); ?></div>
 									</div>
-									<div class="role mt-2 text-Primary-3 font-normal">
+									<div class="role body-2 mt-2 text-Primary-3 font-normal">
 										<?php echo esc_html($member['member_role']); ?></div>
 								</div>
 							</div>
@@ -281,13 +281,13 @@ $id_section_award = get_field('id_section_award') ?: '';
     if($part_list):
     ?>
 	<section class="sectionn-parter section-py" id="<?php echo esc_attr($id_section_partners); ?>"
-		setBackground="<?php echo get_template_directory_uri(); ?>/UI/img/bg-partner.png">
+		setBackground="<?php echo get_template_directory_uri(); ?>/img/bg-partner.png">
 		<div class="container-fluid">
 			<div class="wrap-heading rem:max-w-[1000px] w-full text-center mb-base mx-auto">
 				<h2 class="title heading-1 text-Primary-1 font-bold mb-4">
 					<?php echo $part_title ? esc_html($part_title) : 'Khách hàng - Đối tác'; ?></h2>
 				<?php if($part_desc): ?>
-				<div class="desc body-1 font-normal">
+				<div class="desc body-2 font-normal">
 					<p><?php echo wp_kses_post($part_desc); ?></p>
 				</div>
 				<?php endif; ?>

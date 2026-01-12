@@ -61,7 +61,8 @@ if($image) :
 							<th class="w-[calc(285/1600*100%)] font-normal py-3 px-4"></th>
 						</tr>
 					</thead>
-					<tbody id="career-list" class="-md:flex -md:flex-col -md:gap-y-3">
+					<tbody id="career-list" class="-md:flex -md:flex-col -md:gap-y-3" data-per-page="10" data-current-page="<?php echo $paged; ?>">
+
 						<?php
                         $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
                         $args = array(
@@ -106,9 +107,9 @@ if($image) :
             $total_posts = $query->found_posts;
             if ($total_posts > 10) :
             ?>
-			<div class="flex justify-center">
-				<a class="btn-primary btn" href="#" id="load-more-btn"> <span
-						data-text="<?php _e('Xem thêm', 'canhcamtheme'); ?>"><?php _e('Xem thêm', 'canhcamtheme'); ?></span></a>
+			<div class="flex justify-center" id="load-more-container">
+				<a class="btn-primary btn" href="" id="load-more-btn"> <span
+						data-text="<?php _e('Tìm hiểu thêm', 'canhcamtheme'); ?>"><?php _e('Tìm hiểu thêm', 'canhcamtheme'); ?></span></a>
 			</div>
 			<?php endif; ?>
 		</div>

@@ -2,7 +2,9 @@
 <?php 
 $term = get_queried_object(); 
 $current_term_id = $term->term_id;
-$selected_year = isset($_GET['d_year']) ? sanitize_text_field($_GET['d_year']) : '';
+// $selected_year = isset($_GET['d_year']) ? sanitize_text_field($_GET['d_year']) : '';
+$selected_year = isset($_GET['year']) ? sanitize_text_field($_GET['year']) : (isset($_GET['d_year']) ? sanitize_text_field($_GET['d_year']) : '');
+
 $current_page = get_query_var('paged') ? get_query_var('paged') : 1;
 ?>
 
@@ -80,7 +82,7 @@ $current_page = get_query_var('paged') ? get_query_var('paged') : 1;
                     rsort($years);
                     ?>
 					<form method="get" id="document-filter-form">
-						<select name="d_year" onchange="this.form.submit()">
+						<select name="year" id="year-filter">
 							<option value=""><?php _e('Tất cả', 'canhcamtheme'); ?></option>
 							<?php foreach ($years as $y): ?>
 							<option value="<?php echo esc_attr($y); ?>" <?php selected($selected_year, $y); ?>>

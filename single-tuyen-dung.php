@@ -21,7 +21,7 @@
 					<?php endwhile; ?>
 					<?php endif; ?>
 				</div>
-				<div class="social xl:absolute xl:right-full xl:top-0 -xl:mt-4 xl:mr-4.5 xl:h-full">
+				<!-- <div class="social xl:absolute xl:right-full xl:top-0 -xl:mt-4 xl:mr-4.5 xl:h-full">
 					<ul class="social-list sticky rem:top-[calc(var(--header-height)+12px)]">
 						<li class="social-item">
 							<a class="flex-center w-10 h-10 bg-Primary-2 text-base text-white rounded-full"
@@ -31,7 +31,7 @@
 							</a>
 						</li>
 					</ul>
-				</div>
+				</div> -->
 			</div>
 			<div class="recruitment-detail-action col-span-full lg:col-span-4">
 				<div class="sticky top-[var(--header-height)]">

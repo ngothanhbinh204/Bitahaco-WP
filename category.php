@@ -10,7 +10,7 @@ $term = get_queried_object();
 	<div class="container-fluid">
 		<div class="news flex flex-col gap-base">
 			<div class="news-heading-and-tab flex-between flex-wrap gap-4">
-				<h1 class="heading-1 text-Primary-1"><?php echo esc_html($term->name); ?></h1>
+				<h1 class="heading-1 text-Primary-1 font-bold"><?php echo esc_html($term->name); ?></h1>
 				<ul class="nav-news">
 					<?php
 					$current_term = get_queried_object();
@@ -49,7 +49,7 @@ $term = get_queried_object();
                     ?>
 					<li class="nav-news-item <?php echo $is_active; ?>">
 						<a href="<?php echo get_term_link($category); ?>"
-							title="<?php echo esc_attr($category->name); ?>" class="body-1 <?php echo $is_active; ?>">
+							title="<?php echo esc_attr($category->name); ?>" class="body-2 <?php echo $is_active; ?>">
 							<?php echo $category->name; ?>
 						</a>
 					</li>
@@ -68,7 +68,7 @@ $term = get_queried_object();
                     if ($post_count == 1) : // Bài viết đầu tiên - nổi bật
                 ?>
 			<div class="tab-news-item flex -lg:flex-col items-stretch rounded-5 overflow-hidden">
-				<div class="img-thumb w-full lg:shrink-0 lg:w-[calc(1184/1600*100%)]">
+				<div class="img-thumb w-full lg:shrink-0 lg:w-[69%]">
 					<a class="img-ratio ratio:pt-[652_1184]" href="<?php the_permalink(); ?>">
 						<?php 
                             $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
@@ -150,14 +150,15 @@ $term = get_queried_object();
 
                 if ($total_pages > 1) : 
                 ?>
-			<ul class="pagination justify-center">
-				<?php for ($i = 1; $i <= min(3, $total_pages); $i++) : // Chỉ hiển thị tối đa 3 trang như HTML mẫu ?>
-				<li
-					class="pagination-item flex-center w-10 md:w-12 h-10 md:h-12 border-2 border-Primary-2 rounded-1 heading-4 transition-300 hover:bg-Primary-1 hover:border-Primary-1 cursor-pointer <?php echo ($i == $current_page) ? 'active' : ''; ?>">
-					<a href="<?php echo esc_url(get_pagenum_link($i)); ?>"><?php echo $i; ?></a>
-				</li>
-				<?php endfor; ?>
-			</ul>
+			<div class="pagination">
+				<ul class="">
+					<?php for ($i = 1; $i <= min(3, $total_pages); $i++) : ?>
+					<li class="pagination-item <?php echo ($i == $current_page) ? 'active' : ''; ?>">
+						<a href="<?php echo esc_url(get_pagenum_link($i)); ?>"><?php echo $i; ?></a>
+					</li>
+					<?php endfor; ?>
+				</ul>
+			</div>
 			<?php endif; ?>
 
 			<?php endif; ?>

@@ -4,7 +4,7 @@
 	$banner = get_field('banner');
 	$banner_url = isset($banner['url']) ? $banner['url'] : '';
 	$banner_title = isset($banner['title']) ? $banner['title'] : '';
-	
+	$top_category_name = get_top_level_term_name(get_the_ID(), 'category');
 ?>
 <section class="section-banner-secondary">
 	<div class="block-banner img-ratio ratio:pt-[1_2] md:ratio:pt-[640_1920]">
@@ -15,7 +15,7 @@
 		<div class="content">
 			<div class="container-fluid">
 				<h2 class="title">
-					<?php echo the_title() ?>
+					<?php echo $top_category_name ?>
 				</h2>
 				<div class="global-breadcrumb">
 					<?php if(function_exists('rank_math_the_breadcrumbs')) rank_math_the_breadcrumbs(); ?>

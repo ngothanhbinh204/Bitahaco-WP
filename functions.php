@@ -17,7 +17,7 @@ add_action('wp_enqueue_scripts', function() {
 	$ajax_url = admin_url('admin-ajax.php');
 	
 	// Career archive page scripts
-	if(is_post_type_archive('tuyen-dung') || is_archive('tuyen-dung')) {
+	if(is_post_type_archive('tuyen-dung') || is_archive('tuyen-dung') || is_page_template('templates/template_recruitment.php')) {
 		wp_enqueue_script('career-ajax', get_template_directory_uri() . '/scripts/career-ajax.js', ['jquery'], GENERATE_VERSION, true);
 		wp_localize_script('career-ajax', 'ajax_object', [
 			'ajax_url' => $ajax_url,
@@ -26,7 +26,7 @@ add_action('wp_enqueue_scripts', function() {
 	}
 
 	// Taxonomy co-dong-category and tai-lieu-category page scripts
-	if (is_tax('co-dong-category') || is_tax('tai-lieu-category') || is_post_type_archive('co-dong') || is_post_type_archive('tai-lieu')) {
+	if (is_tax('co-dong-category') || is_tax('tai-lieu-category') || is_post_type_archive('co-dong') || is_post_type_archive('tai-lieu') || is_page_template('templates/template_shareholder.php') || is_page_template('templates/template_document.php')) {
 		$term = get_queried_object();
 		$term_id = (isset($term->term_id)) ? $term->term_id : 0;
 		wp_enqueue_script('document-ajax', get_template_directory_uri() . '/scripts/document-ajax.js', ['jquery'], GENERATE_VERSION, true);
@@ -277,7 +277,15 @@ function render_document_table_and_pagination($term_id, $selected_year, $per_pag
 		<tr>
 			<td><?php echo str_pad($start + $index + 1, 2, '0', STR_PAD_LEFT); ?></td>
 			<td>
-				<a href="<?php echo esc_url(get_permalink()); ?>"><?php echo esc_html($file_title); ?></a>
+				<?php if ($file_url): ?>
+				<a href="<?php echo esc_url($file_url); ?>" target="_blank" rel="noopener noreferrer">
+					<?php echo esc_html($file_title); ?>
+				</a>
+				<?php else: ?>
+				<a href="<?php echo esc_url(get_permalink()); ?>" target="_blank" rel="noopener noreferrer">
+					<?php echo esc_html($file_title); ?>
+				</a>
+				<?php endif; ?>
 			</td>
 			<td>
 				<?php echo esc_html($post_date); ?>
@@ -311,8 +319,10 @@ function render_document_table_and_pagination($term_id, $selected_year, $per_pag
 </table>
 
 <?php if ($total_pages > 1): ?>
-<ul class="pagination justify-center mt-base">
-	<?php
+<div class="pagination-container">
+	<div class="pagination mt-base">
+		<ul class="">
+			<?php
 		// Helper to generate pagination URL
 		$get_pag_link = function($p) use ($selected_year) {
 			$link = get_pagenum_link($p);
@@ -323,36 +333,37 @@ function render_document_table_and_pagination($term_id, $selected_year, $per_pag
 		if ($current_page > 1):
 			$prev_page = max(1, $current_page - 1);
 		?>
-	<li
-		class="pagination-item flex-center w-10 md:w-12 h-10 md:h-12 border-2 border-Primary-2 rounded-1 heading-4 transition-300 hover:bg-Primary-1 hover:border-Primary-1 cursor-pointer">
-		<a href="<?php echo esc_url($get_pag_link($prev_page)); ?>" class="flex-center w-full h-full"><i
-				class="fa-regular fa-chevron-left"></i></a>
-	</li>
-	<?php endif; ?>
+			<li class="pagination-item">
+				<a href="<?php echo esc_url($get_pag_link($prev_page)); ?>" data-paged="<?php echo $prev_page; ?>"
+					class="flex-center w-full h-full"><i class="fa-regular fa-chevron-left"></i></a>
+			</li>
+			<?php endif; ?>
 
-	<?php
+			<?php
 		// Page numbers
 		for ($i = 1; $i <= $total_pages; $i++) {
 			$active = $i == $current_page ? 'active' : '';
 			?>
-	<li
-		class="pagination-item flex-center w-10 md:w-12 h-10 md:h-12 border-2 border-Primary-2 rounded-1 heading-4 transition-300 hover:bg-Primary-1 hover:border-Primary-1 cursor-pointer <?php echo $active; ?>">
-		<a href="<?php echo esc_url($get_pag_link($i)); ?>" class="flex-center w-full h-full"><?php echo $i; ?></a>
-	</li>
-	<?php
+			<li class="pagination-item <?php echo $active; ?>">
+				<a href="<?php echo esc_url($get_pag_link($i)); ?>" data-paged="<?php echo $i; ?>"
+					class="flex-center w-full h-full"><?php echo $i; ?></a>
+			</li>
+			<?php
 		}
 		
 		// Next
 		if ($current_page < $total_pages):
 			$next_page = min($total_pages, $current_page + 1);
 		?>
-	<li
-		class="pagination-item flex-center w-10 md:w-12 h-10 md:h-12 border-2 border-Primary-2 rounded-1 heading-4 transition-300 hover:bg-Primary-1 hover:border-Primary-1 cursor-pointer">
-		<a href="<?php echo esc_url($get_pag_link($next_page)); ?>" class="flex-center w-full h-full"><i
-				class="fa-regular fa-chevron-right"></i></a>
-	</li>
-	<?php endif; ?>
-</ul>
+			<li class="pagination-item">
+				<a href="<?php echo esc_url($get_pag_link($next_page)); ?>" data-paged="<?php echo $next_page; ?>"
+					class="flex-center w-full h-full"><i class="fa-regular fa-chevron-right"></i></a>
+			</li>
+			<?php endif; ?>
+		</ul>
+	</div>
+
+</div>
 <?php endif; ?>
 <?php
 	return ob_get_clean();
@@ -426,7 +437,6 @@ function load_more_careers() {
 	}
 	
 	$page = intval($_POST['page']);
-	$start_count = intval($_POST['count']);
 	$per_page = intval($_POST['per_page']);
 	
 	// Ensure per_page has a valid value
@@ -442,28 +452,26 @@ function load_more_careers() {
 	);
 	
 	$query = new WP_Query($args);
-	$count = $start_count + 1;
+    
+    // Calculate start count based on page number to ensure correct STT even if start_count from client is wrong
+	$count = ($page - 1) * $per_page + 1;
 	$posts_returned = 0;
 	
 	if ($query->have_posts()) {
 		while ($query->have_posts()) : $query->the_post();
 			$information = get_field('information');
-			$location = $information['location'];
-			$deadline = $information['application_deadline'];
+			$location = isset($information['location']) ? $information['location'] : '';
+			$deadline = isset($information['application_deadline']) ? $information['application_deadline'] : '';
 			?>
-<tr
-	class="row-job -md:grid -md:grid-cols-2 -md:w-full text-body-1 border border-utility-gray-100 bg-secondary-1 bg-opacity-[0.05]">
-	<td class="text-center -md:col-span-full -md:font-medium -md:text-left -md:p-2">
-		<?php echo sprintf("%02d", $count); ?></td>
-	<td class="p-2 px-4 py-2 md:py-3 -md:col-span-full"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-	</td>
-	<td class="p-2 px-4 py-2 md:py-3 md:text-center"><?php echo $deadline ? $deadline : ''; ?></td>
-	<td class="p-2 px-4 py-2 md:py-3 md:text-center "><?php echo $location ? $location : ''; ?></td>
-	<td class="p-2 px-4 py-2 md:py-3">
-		<div class="flex-center h-full -md:justify-start"><a class="flex items-center gap-x-2.5 text-utility-gray-500"
-				href="<?php the_permalink(); ?>"><span
-					class="text-body-1"><?php _e('Ứng tuyển ngay', 'canhcamtheme'); ?></span><i
-					class="fa-light fa-angle-right text-base"></i></a></div>
+<tr class="row-job -md:grid -md:grid-cols-1 -md:p-2 body-1 -md:rounded-1 border border-Utility-gray-100">
+	<td class="text-center -md:hidden"><?php echo sprintf("%02d", $count); ?></td>
+	<td class="p-2 px-4 py-2 md:py-3 -md:font-semibold"><?php the_title(); ?></td>
+	<td class="p-2 px-4 py-2 md:py-3 -md:order-3"><?php echo $deadline; ?></td>
+	<td class="p-2 px-4 py-2 md:py-3"><?php echo $location; ?></td>
+	<td class="p-2 px-4 py-2 md:py-3 -md:order-4">
+		<div class="flex-center h-full -md:justify-start"><a class="flex items-center gap-x-2.5 text-Utility-gray-500"
+				href="<?php the_permalink(); ?>"> <span class="body-1"><?php _e('Ứng tuyển ngay', 'canhcamtheme'); ?>
+				</span><i class="fa-light fa-angle-right text-base"></i></a></div>
 	</td>
 </tr>
 <?php
