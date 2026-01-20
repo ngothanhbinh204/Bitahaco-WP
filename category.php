@@ -82,13 +82,13 @@ $term = get_queried_object();
 							alt="<?php the_title_attribute(); ?>" />
 					</a>
 				</div>
-				<div class="block-info flex flex-col justify-center p-10 bg-Primary-1">
+				<div class="block-info flex-1 w-full flex flex-col justify-center p-10 bg-Primary-1">
 					<span class="date body-4 text-white"><?php echo get_the_date('d/m/Y'); ?></span>
 					<h3 class="title heading-3 mt-2 text-white -xl:line-clamp-3 line-clamp-4">
 						<a href="<?php the_permalink(); ?>"
 							class="text-white hover:opacity-80"><?php the_title(); ?></a>
 					</h3>
-					<p class="desc body-1 mt-6 text-white -xl:line-clamp-4 line-clamp-7">
+					<p class="desc body-3 mt-6 text-white -xl:line-clamp-4 line-clamp-7">
 						<?php echo wp_trim_words(get_the_excerpt() ?: get_the_content(), 80, '...'); ?>
 					</p>
 					<a class="inline-block body-1 text-Primary-1 mt-10" href="<?php the_permalink(); ?>">
@@ -130,7 +130,7 @@ $term = get_queried_object();
 						</h3>
 						<a class="seemore-btn inline-flex items-center gap-x-3 mt-5 transition-300 hover:text-Primary-2 text-Utility-gray-500"
 							href="<?php the_permalink(); ?>">
-							<span class="body-1">Xem thêm</span>
+							<span class="body-3">Xem thêm</span>
 							<div class="block-icon leading-[0] text-lg">
 								<i class="fa-light fa-arrow-right"></i>
 							</div>

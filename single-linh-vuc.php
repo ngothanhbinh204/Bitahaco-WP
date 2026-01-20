@@ -57,13 +57,13 @@
 			</div>
 		</div>
 	</section>
-
-	<section class="service-detail-3 section-py bg-[#F3F3FD]">
-		<div class="container-fluid">
-			<?php 
+	<?php 
             $tabs = get_field('service_tabs');
             if($tabs):
             ?>
+	<section class="service-detail-3 section-py bg-[#F3F3FD]">
+		<div class="container-fluid">
+
 			<div class="wrap-tabslet" data-toggle="tabslet">
 				<div class="wrap-heading mb-base">
 					<ul class="tabslet-tab nav-primary">
@@ -120,9 +120,9 @@
 				</div>
 				<?php endforeach; ?>
 			</div>
-			<?php endif; ?>
 		</div>
 	</section>
+	<?php endif; ?>
 
 	<?php 
     // Other Services Query

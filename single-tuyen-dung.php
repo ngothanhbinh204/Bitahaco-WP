@@ -5,14 +5,15 @@
 	<div class="container-1600">
 		<div class="recruitment-detail grid grid-cols-12 gap-base">
 			<div class="block-main-content relative col-span-full lg:col-span-8">
-				<h1 class="detail-title heading-3 pb-4 border-b border-utility-gray-200"><?php the_title(); ?></h1>
+				<h1 class="detail-title text-Primary-1 heading-1 font-bold pb-4 border-b border-utility-gray-200">
+					<?php the_title(); ?></h1>
 				<div class="main-detail-content mt-6 flex flex-col gap-base">
 					<?php if(have_rows('recruitment_content')): ?>
 					<?php while(have_rows('recruitment_content')): the_row(); ?>
 
 					<div class="block-content flex flex-col gap-y-5">
 						<?php if(get_sub_field('title')): ?>
-						<h2 class="heading-2 uppercase"><?php the_sub_field('title'); ?></h2>
+						<h2 class="heading-3 text-Primary-1 font-bold uppercase"><?php the_sub_field('title'); ?></h2>
 						<?php endif; ?>
 						<div class="format-content">
 							<?php the_sub_field('content'); ?>
@@ -35,8 +36,8 @@
 			</div>
 			<div class="recruitment-detail-action col-span-full lg:col-span-4">
 				<div class="sticky top-[var(--header-height)]">
-					<div class="block-apply p-8 bg-Primary-2 text-white ">
-						<h2 class="apply-title heading-2 text-white"><?php _e('Information', 'canhcamtheme'); ?></h2>
+					<div class="block-apply p-8 bg-Primary-1 text-white rounded-5 ">
+						<h2 class="apply-title heading-3 text-white"><?php _e('Information', 'canhcamtheme'); ?></h2>
 						<ul class="apply-list">
 							<?php $information = get_field('information'); ?>
 							<?php if($information) : ?>
@@ -51,9 +52,9 @@
 											fill="white" />
 									</svg>
 								</span>
-								<div class="block-content flex flex-col gap-y-1"><span
-										class="top-content text-body-3"><?php _e('Expiration date', 'canhcamtheme'); ?></span><span
-										class="bottom-content text-body-1"><?php echo $information['application_deadline']; ?></span>
+								<div class="block-content text-white flex flex-col gap-y-1"><span
+										class="top-content body-4"><?php _e('Expiration date', 'canhcamtheme'); ?></span><span
+										class="bottom-content body-1"><?php echo $information['application_deadline']; ?></span>
 								</div>
 							</li>
 							<?php endif; ?>
@@ -68,9 +69,9 @@
 											fill="white" />
 									</svg>
 								</span>
-								<div class="block-content flex flex-col gap-y-1"><span
-										class="top-content text-body-3"><?php _e('Salary', 'canhcamtheme'); ?></span><span
-										class="bottom-content text-body-1"><?php echo $information['salary']; ?></span>
+								<div class="block-content text-white flex flex-col gap-y-1"><span
+										class="top-content body-4"><?php _e('Salary', 'canhcamtheme'); ?></span><span
+										class="bottom-content body-1"><?php echo $information['salary']; ?></span>
 								</div>
 							</li>
 							<?php endif; ?>
@@ -87,7 +88,7 @@
 								</span>
 								<div class="block-content flex flex-col gap-y-1"><span
 										class="top-content text-body-3"><?php _e('Gender', 'canhcamtheme'); ?></span><span
-										class="bottom-content text-body-1"><?php echo $information['gender']; ?></span>
+										class="bottom-content body-1"><?php echo $information['gender']; ?></span>
 								</div>
 							</li>
 							<?php endif; ?>
@@ -104,7 +105,7 @@
 								</span>
 								<div class="block-content flex flex-col gap-y-1"><span
 										class="top-content text-body-3"><?php _e('Experience', 'canhcamtheme'); ?></span><span
-										class="bottom-content text-body-1"><?php echo $information['experience']; ?></span>
+										class="bottom-content body-1"><?php echo $information['experience']; ?></span>
 								</div>
 							</li>
 							<?php endif; ?>
@@ -121,7 +122,7 @@
 								</span>
 								<div class="block-content flex flex-col gap-y-1"><span
 										class="top-content text-body-3"><?php _e('Language', 'canhcamtheme'); ?></span><span
-										class="bottom-content text-body-1"><?php echo $information['language']; ?></span>
+										class="bottom-content body-1"><?php echo $information['language']; ?></span>
 								</div>
 							</li>
 							<?php endif; ?>
@@ -135,7 +136,7 @@
 								</span>
 								<div class="block-content flex flex-col gap-y-1"><span
 										class="top-content text-body-3"><?php echo $item['title']; ?></span><span
-										class="bottom-content text-body-1"><?php echo $item['description']; ?></span>
+										class="bottom-content body-1"><?php echo $item['description']; ?></span>
 								</div>
 							</li>
 							<?php endforeach; ?>
@@ -143,13 +144,14 @@
 							<?php endif; ?>
 						</ul>
 						<a href="#form-requirement" data-fancybox data-src="#form-requirement"
-							class="btn w-full px-6 py-3.5 mt-3 text-body-1 text-Primary-2 bg-white "
+							class="btn w-full px-6 py-3.5 mt-3 btn-secondary "
 							id="apply-now-btn"><?php _e('Ứng tuyển ngay', 'canhcamtheme'); ?></a>
 
 
 					</div>
-					<div class="block-similar-jobs p-5 shadow-[4px_4px_32px_16px_rgba(0,0,0,0.08)] mt-base">
-						<h2 class="similar-jobs-title heading-2"><?php _e('Similar Jobs', 'canhcamtheme'); ?></h2>
+					<div class="block-similar-jobs rounded-5 p-5 shadow-[4px_4px_32px_16px_rgba(0,0,0,0.08)] mt-base">
+						<h2 class="similar-jobs-title heading-3 text-Primary-1">
+							<?php _e('Similar Jobs', 'canhcamtheme'); ?></h2>
 						<ul class="similar-jobs-list">
 							<?php
                             // Get current post ID
@@ -170,20 +172,21 @@
                                 while ($similar_jobs->have_posts()) : $similar_jobs->the_post();
                                     $information = get_field('information');
                                     $dealine = $information['application_deadline'];
-                                    $dealine = date('d/m/Y', strtotime($dealine));
+                                    // $dealine = date('d/m/Y', strtotime($dealine));
                                     ?>
 							<li class="similar-jobs-item group py-5 border-b border-utility-gray-100">
-								<span class="date text-body-2 text-utility-gray-500"><?php echo $dealine; ?></span>
 								<h3
 									class="title heading-4 mt-2.5 line-clamp-2 transition-300 group-hover:text-primary-2">
 									<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 								</h3>
+								<span class="date text-[#818181]"><?php _e('Hạn nộp:', 'canhcamtheme'); ?>
+									<?php echo $dealine; ?></span>
 							</li>
 							<?php endwhile;
                                 wp_reset_postdata();
                             else: ?>
 							<li class="similar-jobs-item py-5">
-								<p class="text-body-1"><?php _e('No similar jobs found', 'canhcamtheme'); ?></p>
+								<p class="body-1"><?php _e('No similar jobs found', 'canhcamtheme'); ?></p>
 							</li>
 							<?php endif; ?>
 						</ul>

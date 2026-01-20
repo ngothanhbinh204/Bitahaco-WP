@@ -292,9 +292,17 @@ function render_document_table_and_pagination($term_id, $selected_year, $per_pag
 			</td>
 			<td>
 				<?php if ($file_url): ?>
+				<?php if (is_user_logged_in()): ?>
 				<a href="<?php echo esc_url($file_url); ?>" download target="_blank" rel="noopener">
-					<span><?php _e('Tải về', 'canhcamtheme'); ?></span><i class="fa-light fa-download"></i>
+					<i class="fa-light fa-download"></i>
+					<span><?php _e('Tải về', 'canhcamtheme'); ?></span>
 				</a>
+				<?php else: ?>
+				<a href="<?php echo wp_login_url(get_permalink()); ?>" class="login-required">
+					<i class="fa-light fa-lock"></i>
+					<span><?php _e('Đăng nhập để tải', 'canhcamtheme'); ?></span>
+				</a>
+				<?php endif; ?>
 				<?php else: ?>
 				<a href="<?php echo esc_url(get_permalink()); ?>" target="_blank" rel="noopener">
 					<span><?php _e('Xem chi tiết', 'canhcamtheme'); ?></span><i class="fa-light fa-arrow-right"></i>
@@ -663,6 +671,44 @@ function my_add_cpt_and_taxonomy_pagination_rules() {
 	}
 }
 add_action( 'init', 'my_add_cpt_and_taxonomy_pagination_rules', 99 );
+
+add_action('pre_get_posts', 'micco_search_filter_post_types');
+function micco_search_filter_post_types($query) {
+
+    // Chỉ frontend
+    if (is_admin()) {
+        return;
+    }
+
+    // Chỉ main query của search
+    if ($query->is_main_query() && $query->is_search()) {
+
+        $query->set('post_type', [
+            'post',    
+            'linh-vuc',   
+        ]);
+
+        // (Optional) đảm bảo có phân trang
+        if (!$query->get('paged')) {
+            $query->set('paged', max(1, get_query_var('paged')));
+        }
+    }
+}
+add_action('wp_footer', function () {
+    ?>
+<script>
+document.addEventListener('wpcf7mailsent', function(event) {
+	const form = event.target;
+	if (!form) return;
+
+	const fileInputs = form.querySelectorAll('input[type="file"]');
+	fileInputs.forEach(input => {
+		input.value = '';
+	});
+}, false);
+</script>
+<?php
+});
 
 
 /* ----------------------------

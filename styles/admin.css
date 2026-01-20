@@ -1,5 +1,12 @@
 :root {
-	--main: #f73936;
+	--main: rgb(20 30 150);
+}
+#login h1 a, .login h1 a {
+	background-image: url(https://bitahaco.webcanhcam.vn/wp-content/themes/canhcamtheme/img/logo-bitahaco.png);
+	height: 11rem !important;
+}
+#login #wp-submit:hover {
+	background-color: #050e6e !important;
 }
 .acf-postbox > .acf-fields.-top > .acf-field > .acf-label label {
 	font-size: 20px;
